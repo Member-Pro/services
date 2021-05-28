@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
@@ -17,11 +19,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MemberPro.Core.Data\MemberPro.Core.Data.csproj" />
     <ProjectReference Include="..\MemberPro.Core.Entities\MemberPro.Core.Entities.csproj" />
+    <ProjectReference Include="..\MemberPro.Core.Services\MemberPro.Core.Services.csproj" />
     <ProjectReference Include="..\MemberPro.Core\MemberPro.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
