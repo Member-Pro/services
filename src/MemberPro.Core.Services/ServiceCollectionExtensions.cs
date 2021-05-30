@@ -1,5 +1,6 @@
 using MemberPro.Core.Models;
 using MemberPro.Core.Services.Geography;
+using MemberPro.Core.Services.Members;
 using MemberPro.Core.Services.Plans;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
+            services.AddTransient<IMemberService, MemberService>();
         }
         
     }

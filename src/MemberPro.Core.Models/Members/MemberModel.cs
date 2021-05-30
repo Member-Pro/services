@@ -6,8 +6,6 @@ namespace MemberPro.Core.Models.Members
 {
     public class MemberModel : BaseModel
     {
-        public string SubjectId { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
