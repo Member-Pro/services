@@ -13,7 +13,7 @@ namespace MemberPro.Core.Data.Mapping.Achievements
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
 
-            builder.Property(x => x.Description).HasMaxLength(500);
+            builder.Property(x => x.Description);
 
             builder.Property(x => x.InfoUrl).HasMaxLength(2000);
             builder.Property(x => x.ImageFilename).HasMaxLength(255);

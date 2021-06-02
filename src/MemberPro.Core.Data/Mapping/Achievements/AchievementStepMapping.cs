@@ -13,8 +13,8 @@ namespace MemberPro.Core.Data.Mapping.Achievements
 
             builder.Property(x => x.AchievementId);
 
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Description).HasMaxLength(500);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Description);
 
             builder.Property(x => x.IsRequired);
             builder.Property(x => x.MinimumCount);
