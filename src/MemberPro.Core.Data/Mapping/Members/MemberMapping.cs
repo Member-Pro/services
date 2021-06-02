@@ -28,8 +28,8 @@ namespace MemberPro.Core.Data.Mapping.Members
             builder.Property(x => x.ShowInDirectory);
             builder.Property(x => x.RegionId);
             builder.Property(x => x.DivisionId);
-            builder.Property(x => x.Biography).HasMaxLength(2000).IsRequired();
-            builder.Property(x => x.Interests).HasMaxLength(1000).IsRequired();
+            builder.Property(x => x.Biography).HasMaxLength(2000);
+            builder.Property(x => x.Interests).HasMaxLength(1000);
 
             builder.HasOne(x => x.Country)
                 .WithMany()
