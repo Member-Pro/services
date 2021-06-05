@@ -16,8 +16,10 @@ namespace MemberPro.Core.Models.Members
 
         public DateTime DateOfBirth { get; set; }
 
+        public int CountryId { get;set; }
         public CountryModel Country { get; set; }
 
+        public int StateProvinceId { get; set; }
         public StateProvinceModel StateProvince { get; set; }
 
         public string Address { get; set; }
@@ -28,8 +30,10 @@ namespace MemberPro.Core.Models.Members
 
         public bool ShowInDirectory { get; set; }
 
+        public int RegionId { get; set; }
         public RegionModel Region { get; set; }
 
+        public int DivisionId { get; set; }
         public DivisionModel Division { get; set; }
 
         public string Biography { get; set; }
@@ -41,5 +45,26 @@ namespace MemberPro.Core.Models.Members
 
         //public virtual List<MemberAchievement> Achievements { get; set; } = new List<MemberAchievement>();
         //public virtual List<MemberAchievementProgress> AchievementProgressRecords { get; set; } = new List<MemberAchievementProgress>();
+    }
+
+    public class RegisterUserModel
+    {
+        public string SubjectId { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string EmailAddress { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
+        public int CountryId { get; set; }
+        public int StateProvinceId { get; set; }
+
+        public string Address { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

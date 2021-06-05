@@ -28,5 +28,24 @@ namespace MemberPro.Api.Controllers
 
             return Ok(member);
         }
+
+        [HttpPost("")]
+        [AllowAnonymous]
+        public async Task<ActionResult<MemberModel>> Register(RegisterUserModel model)
+        {
+            var member = await _memberService.RegisterAsync(model);
+
+            return CreatedAtAction(nameof(CurrentUser), null, member);
+        }
+
+        [HttpPut("")]
+        public async Task<ActionResult<MemberModel>> Update(MemberModel model)
+        {
+            model.Id = User.GetUserId(); // set the ID to the current user
+
+            await _memberService.UpdateAsync(model);
+
+            return NoContent();
+        }
     }
 }
