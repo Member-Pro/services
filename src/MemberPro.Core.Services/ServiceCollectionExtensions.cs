@@ -16,10 +16,12 @@ namespace MemberPro.Core.Services
 
             services.AddTransient<IAchievementService, AchievementService>();
             services.AddTransient<IAchievementStepService, AchievementStepService>();
-            services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IDateTimeService, DateTimeService>();
+            services.AddTransient<IDivisionService, DivisionService>();
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
+            services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
         }
     }
