@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Members
     {
         public override void Configure(EntityTypeBuilder<Member> builder)
         {
-            builder.ToTable("Members");
+            // builder.ToTable("Members");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.SubjectId).HasMaxLength(50);

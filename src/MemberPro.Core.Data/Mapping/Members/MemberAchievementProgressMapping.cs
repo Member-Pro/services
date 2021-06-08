@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Members
     {
         public override void Configure(EntityTypeBuilder<MemberAchievementProgress> builder)
         {
-            builder.ToTable("MemberAchievementProgress");
+            // builder.ToTable("MemberAchievementProgress");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.MemberId);

@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Geography
     {
         public override void Configure(EntityTypeBuilder<Region> builder)
         {
-            builder.ToTable("Regions");
+            // builder.ToTable("Regions");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);

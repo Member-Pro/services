@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Members
     {
         public override void Configure(EntityTypeBuilder<CustomField> builder)
         {
-            builder.ToTable("CustomFields");
+            // builder.ToTable("CustomFields");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired();

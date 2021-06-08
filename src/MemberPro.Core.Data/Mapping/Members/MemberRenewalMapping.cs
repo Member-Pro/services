@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Members
     {
         public override void Configure(EntityTypeBuilder<MemberRenewal> builder)
         {
-            builder.ToTable("MemberRenewals");
+            // builder.ToTable("MemberRenewals");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.MemberId);

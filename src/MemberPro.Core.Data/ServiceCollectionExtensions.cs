@@ -14,7 +14,8 @@ namespace MemberPro.Core.Data
             services.AddDbContext<MemberProDbContext>(options =>
             {
                 //options.UseSqlServer(configuration.GetConnectionString());
-                options.UseNpgsql(configuration.GetConnectionString());
+                options.UseNpgsql(configuration.GetConnectionString())
+                    .UseSnakeCaseNamingConvention();
             });
 
             services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));

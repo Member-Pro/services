@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Plans
     {
         public override void Configure(EntityTypeBuilder<MembershipPlan> builder)
         {
-            builder.ToTable("MembershipPlans");
+            // builder.ToTable("MembershipPlans");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);

@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Geography
     {
         public override void Configure(EntityTypeBuilder<StateProvince> builder)
         {
-            builder.ToTable("StateProvinces");
+            // builder.ToTable("StateProvinces");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.CountryId);

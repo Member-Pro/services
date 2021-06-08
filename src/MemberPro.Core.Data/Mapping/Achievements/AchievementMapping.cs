@@ -8,7 +8,7 @@ namespace MemberPro.Core.Data.Mapping.Achievements
     {
         public override void Configure(EntityTypeBuilder<Achievement> builder)
         {
-            builder.ToTable("Achievements");
+            // builder.ToTable("Achievements");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
