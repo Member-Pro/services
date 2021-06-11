@@ -3,15 +3,17 @@ using System;
 using MemberPro.Core.Data.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MemberPro.Core.Data.Migrations
 {
     [DbContext(typeof(MemberProDbContext))]
-    partial class MemberProDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608041036_AddTrackedEntity")]
+    partial class AddTrackedEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

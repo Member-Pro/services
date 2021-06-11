@@ -23,6 +23,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
+            services.AddTransient<ITrackedAchievementService, TrackedAchievementService>();
         }
     }
 }

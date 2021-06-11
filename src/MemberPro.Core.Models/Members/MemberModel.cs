@@ -47,6 +47,17 @@ namespace MemberPro.Core.Models.Members
         //public virtual List<MemberAchievementProgress> AchievementProgressRecords { get; set; } = new List<MemberAchievementProgress>();
     }
 
+    public class SimpleMemberModel : BaseModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public MemberStatus Status { get; set; }
+        public DateTime JoinedOn { get; set; }
+
+        public string EmailAddress { get; set; }
+    }
+
     public class RegisterUserModel
     {
         public string SubjectId { get; set; }

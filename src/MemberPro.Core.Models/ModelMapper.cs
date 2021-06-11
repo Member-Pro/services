@@ -26,9 +26,11 @@ namespace MemberPro.Core.Models
             CreateMap<MemberAchievement, MemberAchievementModel>();
             CreateMap<MemberAchievementProgress, MemberAchievementProgressModel>();
             CreateMap<Member, MemberModel>();
+            CreateMap<Member, SimpleMemberModel>();
             CreateMap<MemberRenewal, MemberRenewalModel>();
+            CreateMap<TrackedAchievement, TrackedAchievementModel>();
 
             CreateMap<MembershipPlan, MembershipPlanModel>();
-        }        
+        }
     }
 }
