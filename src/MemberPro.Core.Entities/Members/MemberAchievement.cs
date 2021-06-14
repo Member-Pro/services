@@ -11,12 +11,13 @@ namespace MemberPro.Core.Entities.Members
         public int AchievementId { get; set; }
         public virtual Achievement Achievement { get; set; }
 
-        public DateTime SubmittedOn { get; set; }
-        public DateTime? ApprovedOn { get; set; }
+        public DateTime EarnedOn { get; set; }
 
-        public int? ApprovedByMemberId { get; set; }
-        public virtual Member ApprovedByMember { get; set; }
+        public bool DisplayPublicly { get; set; }
 
-        public bool DisplayPublicly { get; set; }        
+        public DateTime CreatedOn { get; set; }
+
+        public int CreatedByMemberId { get; set; }
+        public virtual Member CreatedByMember { get; set; }
     }
 }

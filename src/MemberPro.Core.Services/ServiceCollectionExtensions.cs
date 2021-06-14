@@ -20,6 +20,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IDivisionService, DivisionService>();
             services.AddTransient<IMemberService, MemberService>();
+            services.AddTransient<IMemberAchievementService, MemberAchievementService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();

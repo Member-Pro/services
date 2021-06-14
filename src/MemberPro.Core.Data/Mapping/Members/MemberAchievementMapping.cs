@@ -13,10 +13,10 @@ namespace MemberPro.Core.Data.Mapping.Members
 
             builder.Property(x => x.MemberId);
             builder.Property(x => x.AchievementId);
-            builder.Property(x => x.SubmittedOn);
-            builder.Property(x => x.ApprovedOn);
-            builder.Property(x => x.ApprovedByMemberId);
+            builder.Property(x => x.EarnedOn);
             builder.Property(x => x.DisplayPublicly);
+            builder.Property(x => x.CreatedOn);
+            builder.Property(x => x.CreatedByMemberId);
 
             builder.HasOne(x => x.Member)
                 .WithMany(x => x.Achievements)
@@ -28,9 +28,10 @@ namespace MemberPro.Core.Data.Mapping.Members
                 .IsRequired()
                 .HasForeignKey(x => x.AchievementId);
 
-            builder.HasOne(x => x.ApprovedByMember)
+            builder.HasOne(x => x.CreatedByMember)
                 .WithMany()
-                .HasForeignKey(x => x.ApprovedByMemberId);
+                .IsRequired()
+                .HasForeignKey(x => x.CreatedByMemberId);
         }
     }
 
