@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Members;
 using MemberPro.Core.Exceptions;
@@ -16,6 +19,8 @@ namespace MemberPro.Core.Services.Members
         Task<MemberModel> FindByIdAsync(int id);
         Task<MemberModel> FindByEmailAsync(string email);
         Task<MemberModel> FindBySubjectIdAsync(string subjectId);
+
+        Task<IEnumerable<MemberModel>> SearchAsync();
         Task<MemberModel> RegisterAsync(RegisterUserModel model);
         Task<MemberModel> UpdateAsync(MemberModel model);
     }
@@ -69,6 +74,21 @@ namespace MemberPro.Core.Services.Members
                 return null;
 
             return _mapper.Map<MemberModel>(member);
+        }
+
+        public async Task<IEnumerable<MemberModel>> SearchAsync()
+        {
+            var members = await _memberRepository.TableNoTracking
+                .Include(x => x.Country)
+                .Include(x => x.StateProvince)
+                .Include(x => x.Region)
+                .Include(x => x.Division)
+                .OrderBy(x => x.LastName)
+                .ThenBy(x => x.FirstName)
+                .ProjectTo<MemberModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return members;
         }
 
         public async Task<MemberModel> RegisterAsync(RegisterUserModel model)
