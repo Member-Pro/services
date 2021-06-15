@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MemberPro.Core.Models.Plans;
 using MemberPro.Core.Services.Plans;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MemberPro.Api.Controllers
 {
     [ApiController]
     [Route("plans")]
+    [Authorize]
     public class MembershipPlansController : ControllerBase
     {
         private readonly IMembershipPlanService _membershipPlanService;
@@ -26,6 +29,14 @@ namespace MemberPro.Api.Controllers
             }
 
             return Ok(plan);
+        }
+
+        [HttpGet("")]
+        public async Task<ActionResult<List<MembershipPlanModel>>> List()
+        {
+            var plans = await _membershipPlanService.GetAllAsync();
+
+            return Ok(plans);
         }
     }
 }
