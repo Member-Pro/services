@@ -14,57 +14,57 @@ using Microsoft.Extensions.Logging;
 
 namespace MemberPro.Core.Services.Achievements
 {
-    public interface IAchievementStepService
+    public interface IAchievementRequirementService
     {
-        Task<AchievementStepModel> FindByIdAsync(int id);
-        Task<IEnumerable<AchievementStepModel>> GetByAchievementIdAsync(int achievementId);
+        Task<AchievementRequirementModel> FindByIdAsync(int id);
+        Task<IEnumerable<AchievementRequirementModel>> GetByAchievementIdAsync(int achievementId);
 
-        Task<AchievementStepModel> CreateAsync(CreateAchievementStepModel model);
+        Task<AchievementRequirementModel> CreateAsync(CreateAchievementRequirementModel model);
     }
 
-    public class AchievementStepService : IAchievementStepService
+    public class AchievementRequirementService : IAchievementRequirementService
     {
-        private readonly IRepository<AchievementStep> _stepRepository;
+        private readonly IRepository<AchievementRequirement> _requirementRepository;
         private readonly IAchievementService _achievementService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IMapper _mapper;
-        private readonly ILogger<AchievementStepService> _logger;
+        private readonly ILogger<AchievementRequirementService> _logger;
 
-        public AchievementStepService(IRepository<AchievementStep> stepRepository,
+        public AchievementRequirementService(IRepository<AchievementRequirement> requirementRepository,
             IAchievementService achievementService,
             IDateTimeService dateTimeService,
             IMapper mapper,
-            ILogger<AchievementStepService> logger)
+            ILogger<AchievementRequirementService> logger)
         {
-            _stepRepository = stepRepository;
+            _requirementRepository = requirementRepository;
             _achievementService = achievementService;
             _dateTimeService = dateTimeService;
             _mapper = mapper;
             _logger = logger;
         }
 
-        public async Task<AchievementStepModel> FindByIdAsync(int id)
+        public async Task<AchievementRequirementModel> FindByIdAsync(int id)
         {
-            var step = await _stepRepository.GetByIdAsync(id);
-            if (step == null)
+            var requirement = await _requirementRepository.GetByIdAsync(id);
+            if (requirement == null)
                 return null;
 
-            var model = _mapper.Map<AchievementStepModel>(step);
+            var model = _mapper.Map<AchievementRequirementModel>(requirement);
             return model;
         }
 
-        public async Task<IEnumerable<AchievementStepModel>> GetByAchievementIdAsync(int achievementId)
+        public async Task<IEnumerable<AchievementRequirementModel>> GetByAchievementIdAsync(int achievementId)
         {
-            var steps = await _stepRepository.TableNoTracking
+            var requirements = await _requirementRepository.TableNoTracking
                 .Where(x => x.AchievementId == achievementId)
                 .OrderBy(x => x.Name)
-                .ProjectTo<AchievementStepModel>(_mapper.ConfigurationProvider)
+                .ProjectTo<AchievementRequirementModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            return steps;
+            return requirements;
         }
 
-        public async Task<AchievementStepModel> CreateAsync(CreateAchievementStepModel model)
+        public async Task<AchievementRequirementModel> CreateAsync(CreateAchievementRequirementModel model)
         {
             var achievement = await _achievementService.FindByIdAsync(model.AchievementId);
             if (achievement == null)
@@ -74,7 +74,7 @@ namespace MemberPro.Core.Services.Achievements
 
             try
             {
-                var step = new AchievementStep
+                var requirement = new AchievementRequirement
                 {
                     AchievementId = achievement.Id,
                     Name = model.Name,
@@ -86,16 +86,16 @@ namespace MemberPro.Core.Services.Achievements
                     UpdatedOn = _dateTimeService.NowUtc,
                 };
 
-                await _stepRepository.CreateAsync(step);
+                await _requirementRepository.CreateAsync(requirement);
 
-                var newStep = await FindByIdAsync(step.Id);
-                return newStep;
+                var newRequirement = await FindByIdAsync(requirement.Id);
+                return newRequirement;
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "Error creating achievement step");
+                _logger.LogError(ex, "Error creating achievement requirement");
 
-                throw new ApplicationException("Error creating achievement step", ex);
+                throw new ApplicationException("Error creating achievement requirement", ex);
             }
         }
     }

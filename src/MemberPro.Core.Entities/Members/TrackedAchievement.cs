@@ -21,8 +21,8 @@ namespace MemberPro.Core.Entities.Members
     //     public int TrackedAchievementId { get; set; }
     //     public virtual TrackedAchievement TrackedAchievement { get; set; }
 
-    //     public int AchievementStepId { get; set; }
-    //     public virtual AchievementStep AchievementStep { get; set; }
+    //     public int AchievementRequirementId { get; set; }
+    //     public virtual AchievementRequirement AchievementRequirement { get; set; }
 
     //     public DateTime? CompletedOn { get; set; }
 

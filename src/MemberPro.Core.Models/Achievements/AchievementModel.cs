@@ -17,7 +17,7 @@ namespace MemberPro.Core.Models.Achievements
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 
-        public virtual List<AchievementStepModel> Steps { get; set; } = new List<AchievementStepModel>();
+        public virtual List<AchievementRequirementModel> Requirements { get; set; } = new List<AchievementRequirementModel>();
     }
 
     public class CreateAchievementModel

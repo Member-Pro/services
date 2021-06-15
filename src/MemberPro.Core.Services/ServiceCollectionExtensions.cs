@@ -15,7 +15,7 @@ namespace MemberPro.Core.Services
             services.AddAutoMapper(typeof(ModelMapper));
 
             services.AddTransient<IAchievementService, AchievementService>();
-            services.AddTransient<IAchievementStepService, AchievementStepService>();
+            services.AddTransient<IAchievementRequirementService, AchievementRequirementService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IDivisionService, DivisionService>();

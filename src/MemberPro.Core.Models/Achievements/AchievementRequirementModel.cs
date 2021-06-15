@@ -2,7 +2,7 @@ using System;
 
 namespace MemberPro.Core.Models.Achievements
 {
-    public class AchievementStepModel : BaseModel
+    public class AchievementRequirementModel : BaseModel
     {
         public virtual AchievementModel Achievement { get; set; }
 
@@ -18,7 +18,7 @@ namespace MemberPro.Core.Models.Achievements
         public DateTime UpdatedOn { get; set; }
     }
 
-    public class CreateAchievementStepModel
+    public class CreateAchievementRequirementModel
     {
         public int AchievementId { get; set; }
 

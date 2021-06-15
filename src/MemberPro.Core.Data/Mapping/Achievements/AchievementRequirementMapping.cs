@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MemberPro.Core.Data.Mapping.Achievements
 {
-    public class AchievementStepMapping : EntityTypeConfiguration<AchievementStep>
+    public class AchievementRequirementMapping : EntityTypeConfiguration<AchievementRequirement>
     {
-        public override void Configure(EntityTypeBuilder<AchievementStep> builder)
+        public override void Configure(EntityTypeBuilder<AchievementRequirement> builder)
         {
-            // builder.ToTable("AchievementSteps");
+            // builder.ToTable("AchievementRequirements");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.AchievementId);
@@ -25,7 +25,7 @@ namespace MemberPro.Core.Data.Mapping.Achievements
             builder.Property(x => x.UpdatedOn);
 
             builder.HasOne(x => x.Achievement)
-                .WithMany(x => x.Steps)
+                .WithMany(x => x.Requirements)
                 .HasForeignKey(x => x.AchievementId)
                 .IsRequired();
         }

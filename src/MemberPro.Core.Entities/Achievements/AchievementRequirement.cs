@@ -2,7 +2,7 @@
 
 namespace MemberPro.Core.Entities.Achievements
 {
-    public class AchievementStep : BaseEntity
+    public class AchievementRequirement : BaseEntity
     {
         public int AchievementId { get; set; }
         public virtual Achievement Achievement { get; set; }
