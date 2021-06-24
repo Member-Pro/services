@@ -15,6 +15,7 @@ namespace MemberPro.Core.Models
         public ModelMapper()
         {
             CreateMap<Achievement, AchievementModel>();
+            CreateMap<AchievementActivityRecord, AchievementActivityRecordModel>();
             CreateMap<AchievementRequirement, AchievementRequirementModel>();
 
             CreateMap<Country, CountryModel>();
