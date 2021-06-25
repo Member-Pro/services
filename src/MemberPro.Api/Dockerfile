@@ -4,17 +4,18 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
+WORKDIR /tmp
 COPY ["src/MemberPro.Api/MemberPro.Api.csproj", "src/MemberPro.Api/"]
 RUN dotnet restore "src/MemberPro.Api/MemberPro.Api.csproj"
 COPY . .
-WORKDIR "/src/src/MemberPro.Api"
-RUN dotnet build "MemberPro.Api.csproj" -c Release -o /app/build
+WORKDIR "/tmp/src/MemberPro.Api"
+RUN dotnet build "MemberPro.Api.csproj" -c Release
 
 FROM build AS publish
-RUN dotnet publish "MemberPro.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "MemberPro.Api.csproj" --no-build -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
