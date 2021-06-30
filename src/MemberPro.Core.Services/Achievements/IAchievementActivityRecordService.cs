@@ -105,7 +105,7 @@ namespace MemberPro.Core.Services.Achievements
         public async Task UpdateAsync(AchievementActivityRecordModel model)
         {
             var record = await _repository.GetByIdAsync(model.Id);
-            if (record != null || record.MemberId != model.MemberId)
+            if (record == null || record.MemberId != model.MemberId)
             {
                 throw new ItemNotFoundException($"{nameof(AchievementActivityRecord)} not found");
             }

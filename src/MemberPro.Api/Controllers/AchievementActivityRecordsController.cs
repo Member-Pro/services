@@ -56,6 +56,7 @@ namespace MemberPro.Api.Controllers
             try
             {
                 model.Id = id;
+                model.MemberId = User.GetUserId();
                 model.AchievementId = achievementId;
 
                 await _activityService.UpdateAsync(model);
