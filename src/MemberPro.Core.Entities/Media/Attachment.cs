@@ -8,7 +8,10 @@ namespace MemberPro.Core.Entities.Media
         public int OwnerId { get; set; }
         public virtual Member Owner { get; set; }
 
-        public string AttachmentType { get; set; }
+        ///<summary>
+        /// The group this attachment belongs to (achievements, user profile, requirements, etc.)
+        ///</summary>
+        public string AttachmentGroup { get; set; }
 
         public AttachmentMediaType MediaType { get; set; }
 
