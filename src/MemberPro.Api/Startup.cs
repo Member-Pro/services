@@ -34,8 +34,8 @@ namespace MemberPro.Api
             services.AddControllers();
 
             services.AddDataAccess(Configuration);
-            services.AddAppServices();
-
+            services.AddHttpContextAccessor();
+            services.AddAppServices(Configuration);
 
             services.AddCors(x =>
             {
@@ -155,6 +155,7 @@ namespace MemberPro.Api
                 });
 
                 config.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+
                 config.EnableDeepLinking();
             });
 

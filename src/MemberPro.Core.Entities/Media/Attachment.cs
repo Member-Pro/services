@@ -9,17 +9,19 @@ namespace MemberPro.Core.Entities.Media
         public virtual Member Owner { get; set; }
 
         ///<summary>
-        /// The group this attachment belongs to (achievements, user profile, requirements, etc.)
+        /// The type of object this attachment belongs to (achievements, user profile, requirements, etc.)
         ///</summary>
-        public string AttachmentGroup { get; set; }
+        public string ObjectType { get; set; }
+        public int? ObjectId { get; set; }
 
         public AttachmentMediaType MediaType { get; set; }
 
-        public string OriginalFileName { get; set; }
-        public string SavedFileName { get; set; }
+        public string FileName { get; set; }
 
         public decimal FileSize { get; set; }
         public string ContentType { get; set; }
+
+        public string Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }

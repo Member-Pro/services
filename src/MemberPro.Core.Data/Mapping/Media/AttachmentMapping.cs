@@ -12,15 +12,17 @@ namespace MemberPro.Core.Data.Mapping.Media
 
             builder.Property(x => x.OwnerId);
 
-            builder.Property(x => x.AttachmentGroup).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.ObjectType).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.ObjectId);
 
             builder.Property(x => x.MediaType);
 
-            builder.Property(x => x.OriginalFileName).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.SavedFileName).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.FileName).IsRequired().HasMaxLength(255);
 
             builder.Property(x => x.FileSize);
             builder.Property(x => x.ContentType).IsRequired().HasMaxLength(50);
+
+            builder.Property(x => x.Description).HasMaxLength(255);
 
             builder.Property(x => x.CreatedOn);
 
