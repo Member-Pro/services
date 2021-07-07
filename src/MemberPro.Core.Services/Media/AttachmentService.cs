@@ -94,6 +94,7 @@ namespace MemberPro.Core.Services.Media
                 {
                     OwnerId = model.OwnerId,
                     ObjectType = model.ObjectType,
+                    ObjectId = model.ObjectId,
                     MediaType = model.MediaType,
                     FileName = model.FileName,
                     FileSize = model.FileSize,
