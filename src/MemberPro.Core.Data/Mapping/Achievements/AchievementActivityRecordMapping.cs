@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MemberPro.Core.Data.Mapping.Achievements
 {
-    public class AchievementActivityRecordMapping : EntityTypeConfiguration<AchievementActivityRecord>
+    public class AchievementActivityMapping : EntityTypeConfiguration<AchievementActivity>
     {
-        public override void Configure(EntityTypeBuilder<AchievementActivityRecord> builder)
+        public override void Configure(EntityTypeBuilder<AchievementActivity> builder)
         {
             builder.HasKey(x => x.Id);
 

@@ -2,7 +2,7 @@ using System;
 
 namespace MemberPro.Core.Models.Achievements
 {
-    public class AchievementActivityRecordModel : BaseModel
+    public class AchievementActivityModel : BaseModel
     {
         public int AchievementId { get; set; }
         public virtual AchievementModel Achievement { get; set; }
@@ -21,7 +21,7 @@ namespace MemberPro.Core.Models.Achievements
         public string Comments { get; set; }
     }
 
-    public class CreateAchievementActivityRecordModel : BaseModel
+    public class CreateAchievementActivityModel : BaseModel
     {
         public int AchievementId { get; set; }
 
