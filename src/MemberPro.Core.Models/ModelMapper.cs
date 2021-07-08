@@ -1,10 +1,12 @@
 using AutoMapper;
 using MemberPro.Core.Entities.Achievements;
 using MemberPro.Core.Entities.Geography;
+using MemberPro.Core.Entities.Media;
 using MemberPro.Core.Entities.Members;
 using MemberPro.Core.Entities.Plans;
 using MemberPro.Core.Models.Achievements;
 using MemberPro.Core.Models.Geography;
+using MemberPro.Core.Models.Media;
 using MemberPro.Core.Models.Members;
 using MemberPro.Core.Models.Plans;
 
@@ -17,6 +19,7 @@ namespace MemberPro.Core.Models
             CreateMap<Achievement, AchievementModel>();
             CreateMap<AchievementActivityRecord, AchievementActivityRecordModel>();
             CreateMap<AchievementRequirement, AchievementRequirementModel>();
+            CreateMap<Attachment, AttachmentModel>();
 
             CreateMap<Country, CountryModel>();
             CreateMap<Division, DivisionModel>();

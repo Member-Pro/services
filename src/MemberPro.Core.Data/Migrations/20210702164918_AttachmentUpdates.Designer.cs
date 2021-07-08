@@ -3,15 +3,17 @@ using System;
 using MemberPro.Core.Data.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MemberPro.Core.Data.Migrations
 {
     [DbContext(typeof(MemberProDbContext))]
-    partial class MemberProDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210702164918_AttachmentUpdates")]
+    partial class AttachmentUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,6 +294,12 @@ namespace MemberPro.Core.Data.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("AttachmentGroup")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("attachment_group");
+
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -320,16 +328,6 @@ namespace MemberPro.Core.Data.Migrations
                     b.Property<int>("MediaType")
                         .HasColumnType("integer")
                         .HasColumnName("media_type");
-
-                    b.Property<int?>("ObjectId")
-                        .HasColumnType("integer")
-                        .HasColumnName("object_id");
-
-                    b.Property<string>("ObjectType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("object_type");
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("integer")

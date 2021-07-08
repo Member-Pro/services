@@ -3,15 +3,17 @@ using System;
 using MemberPro.Core.Data.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MemberPro.Core.Data.Migrations
 {
     [DbContext(typeof(MemberProDbContext))]
-    partial class MemberProDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210630024946_CreateAttachments")]
+    partial class CreateAttachments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,6 +294,12 @@ namespace MemberPro.Core.Data.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("AttachmentGroup")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("attachment_group");
+
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -302,17 +310,6 @@ namespace MemberPro.Core.Data.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_on");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("description");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("file_name");
-
                     b.Property<decimal>("FileSize")
                         .HasColumnType("numeric")
                         .HasColumnName("file_size");
@@ -321,19 +318,21 @@ namespace MemberPro.Core.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("media_type");
 
-                    b.Property<int?>("ObjectId")
-                        .HasColumnType("integer")
-                        .HasColumnName("object_id");
-
-                    b.Property<string>("ObjectType")
+                    b.Property<string>("OriginalFileName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("object_type");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("original_file_name");
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("integer")
                         .HasColumnName("owner_id");
+
+                    b.Property<string>("SavedFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("saved_file_name");
 
                     b.HasKey("Id")
                         .HasName("pk_attachment");
