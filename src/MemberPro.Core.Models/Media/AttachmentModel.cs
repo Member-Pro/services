@@ -18,7 +18,7 @@ namespace MemberPro.Core.Models.Media
         public int? ObjectId { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public AttachmentMediaType MediaType { get; set; }
+        public AttachmentType MediaType { get; set; }
 
         public string FileName { get; set; }
 
@@ -43,7 +43,7 @@ namespace MemberPro.Core.Models.Media
         public int? ObjectId { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public AttachmentMediaType MediaType { get; set; }
+        public AttachmentType MediaType { get; set; }
 
         public string FileName { get; set; }
 

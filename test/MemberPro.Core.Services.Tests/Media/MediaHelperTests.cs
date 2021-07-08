@@ -19,7 +19,7 @@ namespace MemberPro.Core.Services.Tests.Media
             var mediaType = mediaHelper.GetMediaTypeFromContentType(contentType);
 
             // Assert
-            Assert.Equal(AttachmentMediaType.Photo, mediaType);
+            Assert.Equal(AttachmentType.Photo, mediaType);
         }
 
         [Theory]
@@ -33,7 +33,7 @@ namespace MemberPro.Core.Services.Tests.Media
             var mediaType = mediaHelper.GetMediaTypeFromContentType(contentType);
 
             // Assert
-            Assert.Equal(AttachmentMediaType.Pdf, mediaType);
+            Assert.Equal(AttachmentType.Pdf, mediaType);
         }
 
         [Theory]
@@ -48,7 +48,7 @@ namespace MemberPro.Core.Services.Tests.Media
             var mediaType = mediaHelper.GetMediaTypeFromContentType(contentType);
 
             // Assert
-            Assert.Equal(AttachmentMediaType.WordDocument, mediaType);
+            Assert.Equal(AttachmentType.WordDocument, mediaType);
         }
 
         [Theory]
@@ -63,7 +63,7 @@ namespace MemberPro.Core.Services.Tests.Media
             var mediaType = mediaHelper.GetMediaTypeFromContentType(contentType);
 
             // Assert
-            Assert.Equal(AttachmentMediaType.ExcelDocument, mediaType);
+            Assert.Equal(AttachmentType.ExcelDocument, mediaType);
         }
     }
 }

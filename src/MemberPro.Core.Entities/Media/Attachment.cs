@@ -14,7 +14,7 @@ namespace MemberPro.Core.Entities.Media
         public string ObjectType { get; set; }
         public int? ObjectId { get; set; }
 
-        public AttachmentMediaType MediaType { get; set; }
+        public AttachmentType MediaType { get; set; }
 
         public string FileName { get; set; }
 
@@ -26,7 +26,7 @@ namespace MemberPro.Core.Entities.Media
         public DateTime CreatedOn { get; set; }
     }
 
-    public enum AttachmentMediaType
+    public enum AttachmentType
     {
         Photo = 1,
 

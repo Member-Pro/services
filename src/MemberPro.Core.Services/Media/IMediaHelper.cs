@@ -4,29 +4,29 @@ namespace MemberPro.Core.Services.Media
 {
     public interface IMediaHelper
     {
-        AttachmentMediaType GetMediaTypeFromContentType(string contentType);
+        AttachmentType GetMediaTypeFromContentType(string contentType);
     }
 
     public class MediaHelper : IMediaHelper
     {
-        public AttachmentMediaType GetMediaTypeFromContentType(string contentType)
+        public AttachmentType GetMediaTypeFromContentType(string contentType)
         {
             switch (contentType)
             {
                 case "image/gif":
                 case "image/jpeg":
                 case "image/png":
-                    return AttachmentMediaType.Photo;
+                    return AttachmentType.Photo;
                 case "application/pdf":
-                    return AttachmentMediaType.Pdf;
+                    return AttachmentType.Pdf;
                 case "application/msword":
                 case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-                    return AttachmentMediaType.WordDocument;
+                    return AttachmentType.WordDocument;
                 case "application/vnd.ms-excel":
                 case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-                    return AttachmentMediaType.ExcelDocument;
+                    return AttachmentType.ExcelDocument;
                 default:
-                    return AttachmentMediaType.OtherDocument;
+                    return AttachmentType.OtherDocument;
             }
         }
     }
