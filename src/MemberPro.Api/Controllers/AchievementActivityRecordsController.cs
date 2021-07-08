@@ -13,24 +13,24 @@ namespace MemberPro.Api.Controllers
     [ApiController]
     [Route("achievements/{achievementId}/activities")]
     [Authorize]
-    public class AchievementActivityRecordsController : ControllerBase
+    public class AchievementActivitiesController : ControllerBase
     {
-        private readonly IAchievementActivityRecordService _activityService;
+        private readonly IAchievementActivityService _activityService;
 
-        public AchievementActivityRecordsController(IAchievementActivityRecordService activityService)
+        public AchievementActivitiesController(IAchievementActivityService activityService)
         {
             _activityService = activityService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AchievementActivityRecordModel>> GetById(int achievementId, int id)
+        public async Task<ActionResult<AchievementActivityModel>> GetById(int achievementId, int id)
         {
             var activity = await _activityService.FindByIdAsync(id);
             return Ok(activity);
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<List<AchievementActivityRecordModel>>> GetByAchievement(int achievementId,
+        public async Task<ActionResult<List<AchievementActivityModel>>> GetByAchievement(int achievementId,
             int? requirementId = null)
         {
             var requirements = await _activityService.GetByMemberIdAsync(achievementId, User.GetUserId(), requirementId);
@@ -38,7 +38,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<ActionResult<AchievementModel>> Create(int achievementId, CreateAchievementActivityRecordModel model)
+        public async Task<ActionResult<AchievementModel>> Create(int achievementId, CreateAchievementActivityModel model)
         {
             model.AchievementId = achievementId;
             model.MemberId = User.GetUserId();
@@ -49,7 +49,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int achievementId, int id, AchievementActivityRecordModel model)
+        public async Task<ActionResult> Update(int achievementId, int id, AchievementActivityModel model)
         {
             // TODO: Verify user can update
 

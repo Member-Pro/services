@@ -3,7 +3,7 @@ using MemberPro.Core.Entities.Members;
 
 namespace MemberPro.Core.Entities.Achievements
 {
-    public class AchievementActivityRecord : BaseEntity
+    public class AchievementActivity : BaseEntity
     {
         public int AchievementId { get; set; }
         public virtual Achievement Achievement { get; set; }

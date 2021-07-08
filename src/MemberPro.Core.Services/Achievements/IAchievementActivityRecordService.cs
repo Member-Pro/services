@@ -13,53 +13,53 @@ using Microsoft.Extensions.Logging;
 
 namespace MemberPro.Core.Services.Achievements
 {
-    public interface IAchievementActivityRecordService
+    public interface IAchievementActivityService
     {
-        Task<AchievementActivityRecordModel> FindByIdAsync(int id);
+        Task<AchievementActivityModel> FindByIdAsync(int id);
 
-        Task<IEnumerable<AchievementActivityRecordModel>> GetAllAsync();
-        Task<IEnumerable<AchievementActivityRecordModel>> GetByMemberIdAsync(int achievementId,
+        Task<IEnumerable<AchievementActivityModel>> GetAllAsync();
+        Task<IEnumerable<AchievementActivityModel>> GetByMemberIdAsync(int achievementId,
             int memberId, int? requirementId = null);
 
-        Task<AchievementActivityRecordModel> CreateAsync(CreateAchievementActivityRecordModel model);
-        Task UpdateAsync(AchievementActivityRecordModel model);
+        Task<AchievementActivityModel> CreateAsync(CreateAchievementActivityModel model);
+        Task UpdateAsync(AchievementActivityModel model);
         Task DeleteAsync(int id);
     }
 
-    public class AchievementActivityRecordService : IAchievementActivityRecordService
+    public class AchievementActivityService : IAchievementActivityService
     {
-        private readonly IRepository<AchievementActivityRecord> _repository;
+        private readonly IRepository<AchievementActivity> _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger<AchievementActivityRecordService> _logger;
+        private readonly ILogger<AchievementActivityService> _logger;
 
-        public AchievementActivityRecordService(IRepository<AchievementActivityRecord> repository,
+        public AchievementActivityService(IRepository<AchievementActivity> repository,
             IMapper mapper,
-            ILogger<AchievementActivityRecordService> logger)
+            ILogger<AchievementActivityService> logger)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
         }
 
-        public async Task<AchievementActivityRecordModel> FindByIdAsync(int id)
+        public async Task<AchievementActivityModel> FindByIdAsync(int id)
         {
             var item = await _repository.GetByIdAsync(id);
             if (item == null)
                 return null;
 
-            return _mapper.Map<AchievementActivityRecordModel>(item);
+            return _mapper.Map<AchievementActivityModel>(item);
         }
 
-        public async Task<IEnumerable<AchievementActivityRecordModel>> GetAllAsync()
+        public async Task<IEnumerable<AchievementActivityModel>> GetAllAsync()
         {
             var items = await _repository.TableNoTracking
-                .ProjectTo<AchievementActivityRecordModel>(_mapper.ConfigurationProvider)
+                .ProjectTo<AchievementActivityModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return items;
         }
 
-        public async Task<IEnumerable<AchievementActivityRecordModel>> GetByMemberIdAsync(int achievementId,
+        public async Task<IEnumerable<AchievementActivityModel>> GetByMemberIdAsync(int achievementId,
             int memberId, int? requirementId = null)
         {
             var activities = await _repository.TableNoTracking
@@ -69,17 +69,17 @@ namespace MemberPro.Core.Services.Achievements
                     && x.MemberId == memberId
                     && (!requirementId.HasValue || x.RequirementId == requirementId.Value))
                 .OrderBy(x => x.ActivityDate)
-                .ProjectTo<AchievementActivityRecordModel>(_mapper.ConfigurationProvider)
+                .ProjectTo<AchievementActivityModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return activities;
         }
 
-        public async Task<AchievementActivityRecordModel> CreateAsync(CreateAchievementActivityRecordModel model)
+        public async Task<AchievementActivityModel> CreateAsync(CreateAchievementActivityModel model)
         {
             try
             {
-                var record = new AchievementActivityRecord
+                var record = new AchievementActivity
                 {
                     AchievementId = model.AchievementId,
                     RequirementId = model.RequirementId,
@@ -97,17 +97,17 @@ namespace MemberPro.Core.Services.Achievements
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, $"Error creating {nameof(AchievementActivityRecord)}");
+                _logger.LogError(ex, $"Error creating {nameof(AchievementActivity)}");
                 throw;
             }
         }
 
-        public async Task UpdateAsync(AchievementActivityRecordModel model)
+        public async Task UpdateAsync(AchievementActivityModel model)
         {
             var record = await _repository.GetByIdAsync(model.Id);
             if (record == null || record.MemberId != model.MemberId)
             {
-                throw new ItemNotFoundException($"{nameof(AchievementActivityRecord)} not found");
+                throw new ItemNotFoundException($"{nameof(AchievementActivity)} not found");
             }
 
             try
@@ -121,7 +121,7 @@ namespace MemberPro.Core.Services.Achievements
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, $"Error updating {nameof(AchievementActivityRecord)}");
+                _logger.LogError(ex, $"Error updating {nameof(AchievementActivity)}");
                 throw;
             }
         }
@@ -133,7 +133,7 @@ namespace MemberPro.Core.Services.Achievements
             var record = await _repository.GetByIdAsync(id);
             if (record != null)
             {
-                throw new ItemNotFoundException($"{nameof(AchievementActivityRecord)} not found");
+                throw new ItemNotFoundException($"{nameof(AchievementActivity)} not found");
             }
 
             try
@@ -142,7 +142,7 @@ namespace MemberPro.Core.Services.Achievements
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, $"Error deleting {nameof(AchievementActivityRecord)}");
+                _logger.LogError(ex, $"Error deleting {nameof(AchievementActivity)}");
                 throw;
             }
         }
