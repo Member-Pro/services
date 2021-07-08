@@ -26,18 +26,21 @@ namespace MemberPro.Core.Services.Media
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IDateTimeService _dateTimeService;
         private readonly IFileStorageService _fileStorageService;
+        private readonly IMediaHelper _mediaHelper;
         private readonly IMapper _mapper;
         private readonly ILogger<AttachmentService> _logger;
 
         public AttachmentService(IRepository<Attachment> attachmentRepository,
             IDateTimeService dateTimeService,
             IFileStorageService fileStorageService,
+            IMediaHelper mediaHelper,
             IMapper mapper,
             ILogger<AttachmentService> logger)
         {
             _attachmentRepository = attachmentRepository;
             _dateTimeService = dateTimeService;
             _fileStorageService = fileStorageService;
+            _mediaHelper = mediaHelper;
             _mapper = mapper;
             _logger = logger;
         }
@@ -90,12 +93,14 @@ namespace MemberPro.Core.Services.Media
                     await _fileStorageService.SaveFileAsync(savePath, model.ContentType, memStream);
                 }
 
+                var mediaType = _mediaHelper.GetMediaTypeFromContentType(model.ContentType);
+
                 var attachment = new Attachment
                 {
                     OwnerId = model.OwnerId,
                     ObjectType = model.ObjectType,
                     ObjectId = model.ObjectId,
-                    MediaType = model.MediaType,
+                    MediaType = mediaType,
                     FileName = model.FileName,
                     FileSize = model.FileSize,
                     ContentType = model.ContentType,
