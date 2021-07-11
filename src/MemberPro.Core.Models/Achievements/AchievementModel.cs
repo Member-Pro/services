@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MemberPro.Core.Entities.Achievements;
 
 namespace MemberPro.Core.Models.Achievements
 {

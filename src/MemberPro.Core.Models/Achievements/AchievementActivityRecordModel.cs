@@ -7,8 +7,8 @@ namespace MemberPro.Core.Models.Achievements
         public int AchievementId { get; set; }
         public virtual AchievementModel Achievement { get; set; }
 
-        public int RequirementId { get; set; }
-        public virtual AchievementRequirementModel Requirement { get; set; }
+        public int? ComponentId { get; set; }
+        // public virtual AchievementRequirementModel Requirement { get; set; }
 
         public int MemberId { get; set; }
 
@@ -21,11 +21,11 @@ namespace MemberPro.Core.Models.Achievements
         public string Comments { get; set; }
     }
 
-    public class CreateAchievementActivityModel : BaseModel
+    public class CreateAchievementActivityModel
     {
         public int AchievementId { get; set; }
 
-        public int RequirementId { get; set; }
+        public int? ComponentId { get; set; }
 
         public int MemberId { get; set; }
 

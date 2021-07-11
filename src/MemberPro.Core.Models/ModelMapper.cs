@@ -18,7 +18,9 @@ namespace MemberPro.Core.Models
         {
             CreateMap<Achievement, AchievementModel>();
             CreateMap<AchievementActivity, AchievementActivityModel>();
-            CreateMap<AchievementRequirement, AchievementRequirementModel>();
+            CreateMap<AchievementComponent, AchievementComponentModel>();
+            CreateMap<Requirement, RequirementModel>();
+            CreateMap<RequirementModel, Requirement>(); // This is stored as JSON so need to be able to map back
             CreateMap<Attachment, AttachmentModel>();
 
             CreateMap<Country, CountryModel>();

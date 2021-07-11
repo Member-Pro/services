@@ -20,7 +20,7 @@ namespace MemberPro.Core.Services
 
             services.AddTransient<IAchievementService, AchievementService>();
             services.AddTransient<IAchievementActivityService, AchievementActivityService>();
-            services.AddTransient<IAchievementRequirementService, AchievementRequirementService>();
+            services.AddTransient<IAchievementComponentService, AchievementComponentService>();
             services.AddTransient<IAttachmentService, AttachmentService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IDateTimeService, DateTimeService>();

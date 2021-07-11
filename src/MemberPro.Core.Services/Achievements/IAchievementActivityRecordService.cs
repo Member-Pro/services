@@ -60,14 +60,14 @@ namespace MemberPro.Core.Services.Achievements
         }
 
         public async Task<IEnumerable<AchievementActivityModel>> GetByMemberIdAsync(int achievementId,
-            int memberId, int? requirementId = null)
+            int memberId, int? componentId = null)
         {
             var activities = await _repository.TableNoTracking
                 .Include(x => x.Achievement)
-                .Include(x => x.Requirement)
+                .Include(x => x.Component)
                 .Where(x => x.AchievementId == achievementId
                     && x.MemberId == memberId
-                    && (!requirementId.HasValue || x.RequirementId == requirementId.Value))
+                    && (!componentId.HasValue || x.ComponentId == componentId.Value))
                 .OrderBy(x => x.ActivityDate)
                 .ProjectTo<AchievementActivityModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
@@ -82,7 +82,7 @@ namespace MemberPro.Core.Services.Achievements
                 var record = new AchievementActivity
                 {
                     AchievementId = model.AchievementId,
-                    RequirementId = model.RequirementId,
+                    ComponentId = model.ComponentId,
                     MemberId = model.MemberId,
                     ActivityDate = model.ActivityDate,
                     Description = model.Description,
