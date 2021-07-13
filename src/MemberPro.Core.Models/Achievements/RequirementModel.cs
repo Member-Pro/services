@@ -1,9 +1,10 @@
-namespace MemberPro.Core.Entities.Achievements
+using MemberPro.Core.Entities.Achievements;
+
+namespace MemberPro.Core.Models.Achievements
 {
-    public class Requirement : BaseEntity
+    public class RequirementModel : BaseModel
     {
         public int ComponentId { get; set; }
-        public virtual AchievementComponent Component { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
@@ -13,18 +14,8 @@ namespace MemberPro.Core.Entities.Achievements
 
         public RequirementType Type { get; set; }
 
-        // TODO: If the ValidationParameters works out, these can go away
         public decimal? MinCount { get; set; }
 
         public decimal? MaxCount { get; set; }
-    }
-
-    public enum RequirementType
-    {
-        Completion = 1,
-
-        Score = 2,
-        Count = 5,
-        Verifications = 10,
     }
 }

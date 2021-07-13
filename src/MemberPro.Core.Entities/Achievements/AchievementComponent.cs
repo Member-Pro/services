@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MemberPro.Core.Entities.Achievements
 {
@@ -15,6 +16,6 @@ namespace MemberPro.Core.Entities.Achievements
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 
-        public Requirement[] Requirements { get; set; }
+        public virtual List<Requirement> Requirements { get; set; } = new List<Requirement>();
     }
 }

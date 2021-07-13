@@ -25,19 +25,5 @@ namespace MemberPro.Core.Models.Achievements
         public string Description { get; set; }
 
         public bool IsDisabled { get; set; }
-
-        public RequirementModel[] Requirements { get; set; }
-    }
-
-    public class RequirementModel
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-
-        public RequirementType Type { get; set; }
-
-        public decimal? MinCount { get; set; }
-
-        public decimal? MaxCount { get; set; }
     }
 }

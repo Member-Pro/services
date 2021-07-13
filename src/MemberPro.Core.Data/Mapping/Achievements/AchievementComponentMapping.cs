@@ -18,7 +18,11 @@ namespace MemberPro.Core.Data.Mapping.Achievements
             builder.Property(x => x.CreatedOn);
             builder.Property(x => x.UpdatedOn);
 
-            builder.Property(x => x.Requirements).HasColumnType("jsonb");
+            builder.HasMany(x => x.Requirements)
+                .WithOne(x => x.Component)
+                .IsRequired()
+                .HasForeignKey(x => x.ComponentId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

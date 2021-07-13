@@ -76,14 +76,11 @@ namespace MemberPro.Core.Services.Achievements
 
             try
             {
-                var requirements = _mapper.Map<Requirement[]>(model.Requirements);
-
                 var Component = new AchievementComponent
                 {
                     AchievementId = achievement.Id,
                     Name = model.Name,
                     Description = model.Description,
-                    Requirements = requirements,
                     IsDisabled = model.IsDisabled,
                     CreatedOn = _dateTimeService.NowUtc,
                     UpdatedOn = _dateTimeService.NowUtc,
@@ -112,11 +109,8 @@ namespace MemberPro.Core.Services.Achievements
 
             try
             {
-                var requirements = _mapper.Map<Requirement[]>(model.Requirements);
-
                 Component.Name = model.Name;
                 Component.Description = model.Description;
-                Component.Requirements = requirements;
                 Component.IsDisabled = model.IsDisabled;
                 Component.UpdatedOn = _dateTimeService.NowUtc;
 

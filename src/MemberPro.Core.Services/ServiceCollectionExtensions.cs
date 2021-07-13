@@ -30,6 +30,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMemberAchievementService, MemberAchievementService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
+            services.AddTransient<IRequirementService, RequirementService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
             services.AddTransient<ITrackedAchievementService, TrackedAchievementService>();
             services.AddTransient<IWorkContext, ApiWorkContext>();
