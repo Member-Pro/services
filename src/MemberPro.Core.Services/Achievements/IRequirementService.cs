@@ -91,13 +91,15 @@ namespace MemberPro.Core.Services.Achievements
 
             try
             {
+                var validationParams = _mapper.Map<RequirementValidationParameter[]>(model.ValidationParameters);
+
                 var requirement = new Requirement
                 {
                     ComponentId = component.Id,
                     Name = model.Name,
                     Description = model.Description,
                     ValidatorTypeName = model.ValidatorTypeName,
-                    ValidationParameters = model.ValidationParameters,
+                    ValidationParameters = validationParams,
                     Type = model.Type,
                     MinCount = model.MinCount,
                     MaxCount = model.MaxCount,
@@ -126,10 +128,12 @@ namespace MemberPro.Core.Services.Achievements
 
             try
             {
+                var validationParams = _mapper.Map<RequirementValidationParameter[]>(model.ValidationParameters);
+
                 requirement.Name = model.Name;
                 requirement.Description = model.Description;
                 requirement.ValidatorTypeName = model.ValidatorTypeName;
-                requirement.ValidationParameters = model.ValidationParameters;
+                requirement.ValidationParameters = validationParams;
                 requirement.Type = model.Type;
                 requirement.MinCount = model.MinCount;
                 requirement.MaxCount = model.MaxCount;

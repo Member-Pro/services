@@ -9,7 +9,7 @@ namespace MemberPro.Core.Entities.Achievements
         public string Description { get; set; }
 
         public string ValidatorTypeName { get; set; }
-        public object ValidationParameters { get; set; }
+        public RequirementValidationParameter[] ValidationParameters { get; set; }
 
         public RequirementType Type { get; set; }
 
@@ -17,6 +17,27 @@ namespace MemberPro.Core.Entities.Achievements
         public decimal? MinCount { get; set; }
 
         public decimal? MaxCount { get; set; }
+    }
+
+    public class RequirementValidationParameter
+    {
+        public string Key { get; set; }
+
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public ParameterInputType InputType { get; set; }
+        public string[] Options { get; set; }
+
+        public bool IsRequired { get; set;}
+    }
+
+    public enum ParameterInputType
+    {
+        TextBox = 1,
+        TextArea = 2,
+        Checkbox = 5,
+        DropDownList = 10
     }
 
     public enum RequirementType

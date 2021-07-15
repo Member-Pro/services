@@ -21,6 +21,8 @@ namespace MemberPro.Core.Models
             CreateMap<AchievementComponent, AchievementComponentModel>();
             CreateMap<Requirement, RequirementModel>();
             CreateMap<RequirementModel, Requirement>(); // This is stored as JSON so need to be able to map back
+            CreateMap<RequirementValidationParameter, RequirementValidationParameterModel>();
+            CreateMap<RequirementValidationParameterModel, RequirementValidationParameter>();
             CreateMap<Attachment, AttachmentModel>();
 
             CreateMap<Country, CountryModel>();
@@ -31,6 +33,7 @@ namespace MemberPro.Core.Models
             CreateMap<CustomField, CustomFieldModel>();
             CreateMap<MemberAchievement, MemberAchievementModel>();
             CreateMap<MemberAchievementProgress, MemberAchievementProgressModel>();
+            CreateMap<MemberRequirementState, MemberRequirementStateModel>();
             CreateMap<Member, MemberModel>();
             CreateMap<Member, SimpleMemberModel>();
             CreateMap<MemberRenewal, MemberRenewalModel>();

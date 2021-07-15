@@ -28,6 +28,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMediaHelper, MediaHelper>();
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IMemberAchievementService, MemberAchievementService>();
+            services.AddTransient<IMemberRequirementService, MemberRequirementService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IRequirementService, RequirementService>();
