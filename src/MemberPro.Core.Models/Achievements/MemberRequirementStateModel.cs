@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MemberPro.Core.Models.Achievements
 {
@@ -10,6 +11,6 @@ namespace MemberPro.Core.Models.Achievements
 
         public DateTime UpdatedOn { get; set; }
 
-        public object Data { get; set; }
+        public Dictionary<string, object> Data { get; set; }
     }
 }

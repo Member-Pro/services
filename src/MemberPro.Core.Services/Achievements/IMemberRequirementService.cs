@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using MemberPro.Core.Data;
@@ -43,8 +44,8 @@ namespace MemberPro.Core.Services.Achievements
                 .Where(x => x.MemberId == memberId && x.Requirement.Component.AchievementId == achievementId)
                 .ToListAsync();
 
-            var result = _mapper.Map<List<MemberRequirementStateModel>>(states);
-            return result;
+            var models = _mapper.Map<List<MemberRequirementStateModel>>(states);
+            return models;
         }
 
         public async Task<MemberRequirementStateModel> GetStateForRequirementAsync(int memberId, int requirementId)

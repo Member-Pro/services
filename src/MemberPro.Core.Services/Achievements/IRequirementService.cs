@@ -18,7 +18,7 @@ namespace MemberPro.Core.Services.Achievements
     {
         Task<RequirementModel> FindByIdAsync(int id);
 
-        Task<IEnumerable<RequirementModel>> GetByAchievementIdAsync(int achievementId);
+        Task<IEnumerable<RequirementModel>> GetByAchievementIdAsync(int achievementId, int? memberId = null);
         Task<IEnumerable<RequirementModel>> GetByComponentIdAsync(int componentId);
 
         Task<RequirementModel> CreateAsync(int componentId, RequirementModel model);
@@ -29,18 +29,21 @@ namespace MemberPro.Core.Services.Achievements
     {
         private readonly IRepository<Requirement> _requirementRepository;
         private readonly IAchievementComponentService _componentService;
+        private readonly IMemberRequirementService _memberRequirementService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IMapper _mapper;
         private readonly ILogger<RequirementService> _logger;
 
         public RequirementService(IRepository<Requirement> requirementRepository,
             IAchievementComponentService componentService,
+            IMemberRequirementService memberRequirementService,
             IDateTimeService dateTimeService,
             IMapper mapper,
             ILogger<RequirementService> logger)
         {
             _requirementRepository = requirementRepository;
             _componentService = componentService;
+            _memberRequirementService = memberRequirementService;
             _dateTimeService = dateTimeService;
             _mapper = mapper;
             _logger = logger;
@@ -56,7 +59,7 @@ namespace MemberPro.Core.Services.Achievements
             return model;
         }
 
-        public async Task<IEnumerable<RequirementModel>> GetByAchievementIdAsync(int achievementId)
+        public async Task<IEnumerable<RequirementModel>> GetByAchievementIdAsync(int achievementId, int? memberId = null)
         {
             // NOTE: Cannot map to the model as part of the query due to JSON property (Parts)
             var requirements = await _requirementRepository.TableNoTracking
@@ -65,8 +68,32 @@ namespace MemberPro.Core.Services.Achievements
                 .ThenBy(x => x.Name)
                 .ToListAsync();
 
-            var models = requirements.Select(x => _mapper.Map<RequirementModel>(x));
+            var models = _mapper.Map<List<RequirementModel>>(requirements);
+
+            if (memberId.HasValue)
+            {
+                var requirementStates = await _memberRequirementService.GetStatesForAchievementIdAsync(memberId.Value, achievementId);
+                foreach(var reqModel in models)
+                {
+                    var paramData = requirementStates.FirstOrDefault(x => x.RequirementId == reqModel.Id);
+                    if (paramData != null)
+                    {
+                        foreach(var param in reqModel.ValidationParameters)
+                        {
+                            param.Value = paramData.Data[param.Key]?.ToString();
+                        }
+                    }
+                }
+            }
+
             return models;
+        }
+
+        private static object GetValue(object source, string paramKey)
+        {
+            if (source == null) return null;
+
+            return source.GetType()?.GetProperty(paramKey)?.GetValue(source, null);
         }
 
         public async Task<IEnumerable<RequirementModel>> GetByComponentIdAsync(int componentId)

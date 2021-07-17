@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MemberPro.Core.Exceptions;
 using MemberPro.Core.Models.Achievements;
+using MemberPro.Core.Services;
 using MemberPro.Core.Services.Achievements;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,13 @@ namespace MemberPro.Api.Controllers
     [Authorize]
     public class AchievementRequirementsController : ControllerBase
     {
+        private readonly IWorkContext _workContext;
         private readonly IRequirementService _requirementService;
 
-        public AchievementRequirementsController(IRequirementService requirementService)
+        public AchievementRequirementsController(IWorkContext workContext,
+            IRequirementService requirementService)
         {
+            _workContext = workContext;
             _requirementService = requirementService;
         }
 
@@ -31,7 +35,7 @@ namespace MemberPro.Api.Controllers
         [HttpGet("/achievements/{achievementId}/requirements")]
         public async Task<ActionResult<List<RequirementModel>>> GetByAchievement(int achievementId)
         {
-            var requirements = await _requirementService.GetByAchievementIdAsync(achievementId);
+            var requirements = await _requirementService.GetByAchievementIdAsync(achievementId, _workContext.GetCurrentUserId());
             return Ok(requirements);
         }
 

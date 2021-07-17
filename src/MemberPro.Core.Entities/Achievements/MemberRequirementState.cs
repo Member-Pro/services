@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MemberPro.Core.Entities.Members;
 
 namespace MemberPro.Core.Entities.Achievements
@@ -13,6 +14,6 @@ namespace MemberPro.Core.Entities.Achievements
 
         public DateTime UpdatedOn { get; set; }
 
-        public object Data { get; set; }
+        public Dictionary<string, object> Data { get; set; }
     }
 }

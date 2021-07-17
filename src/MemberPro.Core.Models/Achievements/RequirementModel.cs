@@ -26,9 +26,11 @@ namespace MemberPro.Core.Models.Achievements
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public ParameterInputType InputType { get; set; }
+        public string InputType { get; set; }
         public string[] Options { get; set; }
 
-        public bool IsRequired { get; set;}
+        public bool IsRequired { get; set; }
+
+        public string Value { get; set; }
     }
 }
