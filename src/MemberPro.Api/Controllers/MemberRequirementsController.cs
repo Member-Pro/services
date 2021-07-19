@@ -40,7 +40,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPut("/requirements/{requirementId}/state")]
-        public async Task<ActionResult> UpdateStateForCurrentUser(int requirementId, MemberRequirementStateModel model)
+        public async Task<ActionResult> UpdateStateForCurrentUser(int requirementId, UpdateMemberRequirementStateModel model)
         {
             model.MemberId = _workContext.GetCurrentUserId();
             model.RequirementId = requirementId;

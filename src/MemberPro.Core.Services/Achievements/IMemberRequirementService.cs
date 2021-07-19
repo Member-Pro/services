@@ -17,7 +17,7 @@ namespace MemberPro.Core.Services.Achievements
     {
         Task<IEnumerable<MemberRequirementStateModel>> GetStatesForAchievementIdAsync(int memberId, int achievementId);
         Task<MemberRequirementStateModel> GetStateForRequirementAsync(int memberId, int requirementId);
-        Task<MemberRequirementStateModel> UpdateAsync(MemberRequirementStateModel model);
+        Task<MemberRequirementStateModel> UpdateAsync(UpdateMemberRequirementStateModel model);
     }
 
     public class MemberRequirementService : IMemberRequirementService
@@ -56,7 +56,7 @@ namespace MemberPro.Core.Services.Achievements
             return model;
         }
 
-        public async Task<MemberRequirementStateModel> UpdateAsync(MemberRequirementStateModel model)
+        public async Task<MemberRequirementStateModel> UpdateAsync(UpdateMemberRequirementStateModel model)
         {
             var stateEntity = await GetStateEntityAsync(model.MemberId, model.RequirementId);
             if (stateEntity == null)
