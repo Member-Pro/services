@@ -59,7 +59,8 @@ namespace MemberPro.Core.Services.Achievements
             // NOTE: Cannot map to the model as part of the query due to JSON property (Parts)
             var Components = await _componentRepository.TableNoTracking
                 .Where(x => x.AchievementId == achievementId)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.DisplayOrder)
+                .ThenBy(x => x.Name)
                 .ToListAsync();
 
             var models = Components.Select(x => _mapper.Map<AchievementComponentModel>(x));
@@ -81,6 +82,7 @@ namespace MemberPro.Core.Services.Achievements
                     AchievementId = achievement.Id,
                     Name = model.Name,
                     Description = model.Description,
+                    DisplayOrder = model.DisplayOrder,
                     IsDisabled = model.IsDisabled,
                     CreatedOn = _dateTimeService.NowUtc,
                     UpdatedOn = _dateTimeService.NowUtc,
@@ -111,6 +113,7 @@ namespace MemberPro.Core.Services.Achievements
             {
                 Component.Name = model.Name;
                 Component.Description = model.Description;
+                Component.DisplayOrder = model.DisplayOrder;
                 Component.IsDisabled = model.IsDisabled;
                 Component.UpdatedOn = _dateTimeService.NowUtc;
 

@@ -64,7 +64,7 @@ namespace MemberPro.Core.Services.Achievements
             // NOTE: Cannot map to the model as part of the query due to JSON property (Parts)
             var requirements = await _requirementRepository.TableNoTracking
                 .Where(x => x.Component.AchievementId == achievementId)
-                .OrderBy(x => x.ComponentId)
+                .OrderBy(x => x.DisplayOrder)
                 .ThenBy(x => x.Name)
                 .ToListAsync();
 
@@ -101,7 +101,8 @@ namespace MemberPro.Core.Services.Achievements
             // NOTE: Cannot map to the model as part of the query due to JSON property (Parts)
             var requirements = await _requirementRepository.TableNoTracking
                 .Where(x => x.ComponentId == componentId)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.DisplayOrder)
+                .ThenBy(x => x.Name)
                 .ToListAsync();
 
             var models = requirements.Select(x => _mapper.Map<RequirementModel>(x));
@@ -125,6 +126,7 @@ namespace MemberPro.Core.Services.Achievements
                     ComponentId = component.Id,
                     Name = model.Name,
                     Description = model.Description,
+                    DisplayOrder = model.DisplayOrder,
                     ValidatorTypeName = model.ValidatorTypeName,
                     ValidationParameters = validationParams,
                     Type = model.Type,
@@ -159,6 +161,7 @@ namespace MemberPro.Core.Services.Achievements
 
                 requirement.Name = model.Name;
                 requirement.Description = model.Description;
+                requirement.DisplayOrder = model.DisplayOrder;
                 requirement.ValidatorTypeName = model.ValidatorTypeName;
                 requirement.ValidationParameters = validationParams;
                 requirement.Type = model.Type;

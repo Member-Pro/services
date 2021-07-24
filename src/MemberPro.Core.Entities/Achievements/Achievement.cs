@@ -12,6 +12,8 @@ namespace MemberPro.Core.Entities.Achievements
 
         public string ImageFilename { get; set; }
 
+        public int DisplayOrder { get; set; }
+
         public bool IsDisabled { get; set; }
 
         public DateTime CreatedOn { get; set; }

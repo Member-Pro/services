@@ -8,6 +8,8 @@ namespace MemberPro.Core.Entities.Achievements
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public int DisplayOrder { get; set; }
+
         public string ValidatorTypeName { get; set; }
         public RequirementValidationParameter[] ValidationParameters { get; set; }
 

@@ -13,6 +13,8 @@ namespace MemberPro.Core.Models.Achievements
 
         public string ImageFilename { get; set; }
 
+        public int DisplayOrder { get; set; }
+
         public bool IsDisabled { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -27,6 +29,8 @@ namespace MemberPro.Core.Models.Achievements
         public string InfoUrl { get; set; }
 
         public string ImageFilename { get; set; }
+
+        public int DisplayOrder { get; set; }
 
         public bool IsDisabled { get; set; }
     }

@@ -53,7 +53,8 @@ namespace MemberPro.Core.Services.Achievements
         public async Task<IEnumerable<AchievementModel>> GetAllAsync()
         {
             var achievements = await _achievementRepository.TableNoTracking
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.DisplayOrder)
+                .ThenBy(x => x.Name)
                 .ProjectTo<AchievementModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
@@ -70,6 +71,7 @@ namespace MemberPro.Core.Services.Achievements
                     Description = model.Description,
                     InfoUrl = model.InfoUrl,
                     ImageFilename = model.ImageFilename,
+                    DisplayOrder = model.DisplayOrder,
                     IsDisabled = model.IsDisabled,
                     CreatedOn = _dateTimeService.NowUtc,
                     UpdatedOn = _dateTimeService.NowUtc,
