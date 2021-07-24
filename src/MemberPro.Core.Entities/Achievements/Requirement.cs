@@ -39,6 +39,7 @@ namespace MemberPro.Core.Entities.Achievements
         TextBox = 1,
         TextArea = 2,
         Checkbox = 5,
+        DatePicker = 6,
         DropDownList = 10
     }
 

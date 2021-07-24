@@ -80,7 +80,9 @@ namespace MemberPro.Core.Services.Achievements
                     {
                         foreach(var param in reqModel.ValidationParameters)
                         {
-                            param.Value = paramData.Data[param.Key]?.ToString();
+                            param.Value = paramData.Data.ContainsKey(param.Key) && !string.IsNullOrEmpty(paramData.Data[param.Key]?.ToString())
+                                ? paramData.Data[param.Key].ToString()
+                                : null;
                         }
                     }
                 }
