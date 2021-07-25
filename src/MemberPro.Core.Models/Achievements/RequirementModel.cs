@@ -33,6 +33,9 @@ namespace MemberPro.Core.Models.Achievements
 
         public bool IsRequired { get; set; }
 
+        public decimal? Minimum { get; set; }
+        public decimal? Maximum { get; set; }
+
         public string Value { get; set; }
     }
 }

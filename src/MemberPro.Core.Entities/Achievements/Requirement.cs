@@ -31,7 +31,10 @@ namespace MemberPro.Core.Entities.Achievements
         public ParameterInputType InputType { get; set; }
         public string[] Options { get; set; }
 
-        public bool IsRequired { get; set;}
+        public bool IsRequired { get; set; }
+
+        public decimal? Minimum { get; set; }
+        public decimal? Maximum { get; set; }
     }
 
     public enum ParameterInputType

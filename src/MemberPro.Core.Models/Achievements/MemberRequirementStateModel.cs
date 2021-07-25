@@ -12,6 +12,16 @@ namespace MemberPro.Core.Models.Achievements
         public DateTime UpdatedOn { get; set; }
 
         public Dictionary<string, object> Data { get; set; }
+
+        public object GetValue(string key)
+        {
+            if (!Data.ContainsKey(key))
+            {
+                return null;
+            }
+
+            return Data[key];
+        }
     }
 
     public class UpdateMemberRequirementStateModel
