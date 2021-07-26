@@ -28,13 +28,15 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMediaHelper, MediaHelper>();
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IMemberAchievementService, MemberAchievementService>();
-            services.AddTransient<IMemberRequirementService, MemberRequirementService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IRequirementService, RequirementService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
             services.AddTransient<ITrackedAchievementService, TrackedAchievementService>();
             services.AddTransient<IWorkContext, ApiWorkContext>();
+
+            // Add the various requirement validatiors; there can be multiple
+            services.AddTransient<IRequirementValidator, RequirementParameterValidator>();
 
             services.Configure<FileStorageConfig>(configuration.GetSection("FileStorage"));
 

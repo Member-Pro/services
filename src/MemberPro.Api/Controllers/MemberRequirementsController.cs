@@ -14,19 +14,19 @@ namespace MemberPro.Api.Controllers
     public class MemberRequirementsController : ControllerBase
     {
         private readonly IWorkContext _workContext;
-        private readonly IMemberRequirementService _memberRequirementService;
+        private readonly IRequirementService _requirementService;
 
         public MemberRequirementsController(IWorkContext workContext,
-            IMemberRequirementService memberRequirementService)
+            IRequirementService requirementService)
         {
             _workContext = workContext;
-            _memberRequirementService = memberRequirementService;
+            _requirementService = requirementService;
         }
 
         [HttpGet("/achievements/{achievementId}/state")]
         public async Task<ActionResult<IEnumerable<MemberRequirementStateModel>>> GetForAchievement(int achievementId)
         {
-            var result = await _memberRequirementService.GetStatesForAchievementIdAsync(_workContext.GetCurrentUserId(),
+            var result = await _requirementService.GetStatesForAchievementIdAsync(_workContext.GetCurrentUserId(),
                 achievementId);
 
             return Ok(result);
@@ -35,7 +35,7 @@ namespace MemberPro.Api.Controllers
         [HttpGet("/requirements/{requirementId}/state")]
         public async Task<ActionResult<MemberRequirementStateModel>> GetStateForCurrentUser(int requirementId)
         {
-            var model = await _memberRequirementService.GetStateForRequirementAsync(_workContext.GetCurrentUserId(), requirementId);
+            var model = await _requirementService.GetStateForRequirementAsync(_workContext.GetCurrentUserId(), requirementId);
             return Ok(model);
         }
 
@@ -45,9 +45,9 @@ namespace MemberPro.Api.Controllers
             model.MemberId = _workContext.GetCurrentUserId();
             model.RequirementId = requirementId;
 
-            await _memberRequirementService.UpdateAsync(model);
+            var result = await _requirementService.UpdateStateAsync(model);
 
-            return Ok(); // NoContent?
+            return Ok(result);
         }
     }
 

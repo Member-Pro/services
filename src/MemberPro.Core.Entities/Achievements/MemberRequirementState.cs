@@ -15,5 +15,7 @@ namespace MemberPro.Core.Entities.Achievements
         public DateTime UpdatedOn { get; set; }
 
         public Dictionary<string, object> Data { get; set; }
+
+        public bool IsValid { get; set; }
     }
 }

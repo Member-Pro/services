@@ -13,6 +13,8 @@ namespace MemberPro.Core.Models.Achievements
 
         public Dictionary<string, object> Data { get; set; }
 
+        public bool IsValid { get; set; }
+
         public object GetValue(string key)
         {
             if (!Data.ContainsKey(key))

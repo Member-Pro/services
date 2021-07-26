@@ -23,27 +23,34 @@ namespace MemberPro.Core.Services.Achievements
 
         Task<RequirementModel> CreateAsync(int componentId, RequirementModel model);
         Task UpdateAsync(RequirementModel model);
+
+        Task<IEnumerable<MemberRequirementStateModel>> GetStatesForAchievementIdAsync(int memberId, int achievementId);
+        Task<MemberRequirementStateModel> GetStateForRequirementAsync(int memberId, int requirementId);
+        Task<MemberRequirementStateModel> UpdateStateAsync(UpdateMemberRequirementStateModel model, bool validate = true);
     }
 
     public class RequirementService : IRequirementService
     {
         private readonly IRepository<Requirement> _requirementRepository;
+        private readonly IRepository<MemberRequirementState> _memberRequirementStateRepository;
         private readonly IAchievementComponentService _componentService;
-        private readonly IMemberRequirementService _memberRequirementService;
+        private readonly IEnumerable<IRequirementValidator> _requirementValidators;
         private readonly IDateTimeService _dateTimeService;
         private readonly IMapper _mapper;
         private readonly ILogger<RequirementService> _logger;
 
         public RequirementService(IRepository<Requirement> requirementRepository,
+            IRepository<MemberRequirementState> memberRequirementStateRepository,
             IAchievementComponentService componentService,
-            IMemberRequirementService memberRequirementService,
+            IEnumerable<IRequirementValidator> requirementValidators,
             IDateTimeService dateTimeService,
             IMapper mapper,
             ILogger<RequirementService> logger)
         {
             _requirementRepository = requirementRepository;
+            _memberRequirementStateRepository = memberRequirementStateRepository;
             _componentService = componentService;
-            _memberRequirementService = memberRequirementService;
+            _requirementValidators = requirementValidators;
             _dateTimeService = dateTimeService;
             _mapper = mapper;
             _logger = logger;
@@ -72,7 +79,7 @@ namespace MemberPro.Core.Services.Achievements
 
             if (memberId.HasValue)
             {
-                var requirementStates = await _memberRequirementService.GetStatesForAchievementIdAsync(memberId.Value, achievementId);
+                var requirementStates = await GetStatesForAchievementIdAsync(memberId.Value, achievementId);
                 foreach(var reqModel in models)
                 {
                     var paramData = requirementStates.FirstOrDefault(x => x.RequirementId == reqModel.Id);
@@ -179,5 +186,85 @@ namespace MemberPro.Core.Services.Achievements
                 throw new ApplicationException("Error updating requirement", ex);
             }
         }
+        public async Task<IEnumerable<MemberRequirementStateModel>> GetStatesForAchievementIdAsync(int memberId, int achievementId)
+        {
+            var states = await _memberRequirementStateRepository.TableNoTracking
+                .Where(x => x.MemberId == memberId && x.Requirement.Component.AchievementId == achievementId)
+                .ToListAsync();
+
+            var models = _mapper.Map<List<MemberRequirementStateModel>>(states);
+            return models;
+        }
+
+        public async Task<MemberRequirementStateModel> GetStateForRequirementAsync(int memberId, int requirementId)
+        {
+            var state = await GetStateEntityAsync(memberId, requirementId);
+
+            var model = _mapper.Map<MemberRequirementStateModel>(state);
+            return model;
+        }
+
+        public async Task<MemberRequirementStateModel> UpdateStateAsync(UpdateMemberRequirementStateModel model,  bool validate = true)
+        {
+            var stateEntity = await GetStateEntityAsync(model.MemberId, model.RequirementId);
+            if (stateEntity == null)
+            {
+                stateEntity = new MemberRequirementState
+                {
+                    MemberId = model.MemberId,
+                    RequirementId = model.RequirementId
+                };
+
+                await _memberRequirementStateRepository.CreateAsync(stateEntity);
+            }
+
+            stateEntity.UpdatedOn = _dateTimeService.NowUtc;
+            stateEntity.Data = model.Data;
+
+            await _memberRequirementStateRepository.UpdateAsync(stateEntity);
+
+            var stateModel = _mapper.Map<MemberRequirementStateModel>(stateEntity);
+
+            if (validate)
+            {
+                stateEntity.IsValid = await ValidateRequirementAsync(stateModel);
+                await _memberRequirementStateRepository.UpdateAsync(stateEntity);
+
+                stateModel = _mapper.Map<MemberRequirementStateModel>(stateEntity);
+            }
+
+            return stateModel;
+        }
+
+        public async Task<bool> ValidateRequirementAsync(MemberRequirementStateModel stateModel)
+        {
+            var requirement = await FindByIdAsync(stateModel.RequirementId);
+            var validator = GetRequirementValidator(requirement.ValidatorTypeName);
+
+            var validationRequest = new ValidateRequirementRequest
+            {
+                Requirement = requirement,
+                RequirementState = stateModel,
+            };
+
+            var isValid = await validator.ValidateAsync(validationRequest);
+            return isValid;
+        }
+
+        private IRequirementValidator GetRequirementValidator(string typeName)
+        {
+            var validator = _requirementValidators.FirstOrDefault(x => x.GetType().Name == typeName);
+            if (validator == null)
+            {
+                throw new Exception($"No validator matching type '{typeName}' found.");
+            }
+
+            return validator;
+        }
+
+        private async Task<MemberRequirementState> GetStateEntityAsync(int memberId, int requirementId) =>
+            await _memberRequirementStateRepository.TableNoTracking
+                .FirstOrDefaultAsync(x => x.MemberId == memberId
+                    && x.RequirementId == requirementId);
     }
 }
