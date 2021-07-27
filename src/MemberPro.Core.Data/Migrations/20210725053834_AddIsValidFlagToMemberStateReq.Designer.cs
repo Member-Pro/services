@@ -5,15 +5,17 @@ using MemberPro.Core.Data.Implementations;
 using MemberPro.Core.Entities.Achievements;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MemberPro.Core.Data.Migrations
 {
     [DbContext(typeof(MemberProDbContext))]
-    partial class MemberProDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210725053834_AddIsValidFlagToMemberStateReq")]
+    partial class AddIsValidFlagToMemberStateReq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

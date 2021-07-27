@@ -8,8 +8,8 @@ namespace MemberPro.Core.Entities.Achievements
         public int AchievementId { get; set; }
         public virtual Achievement Achievement { get; set; }
 
-        public int RequirementId { get; set; }
-        public virtual AchievementRequirement Requirement { get; set; }
+        public int? ComponentId { get; set; }
+        public virtual AchievementComponent Component { get; set; }
 
         public int MemberId { get; set; }
         public virtual Member Member { get; set; }

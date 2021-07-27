@@ -20,7 +20,7 @@ namespace MemberPro.Core.Services
 
             services.AddTransient<IAchievementService, AchievementService>();
             services.AddTransient<IAchievementActivityService, AchievementActivityService>();
-            services.AddTransient<IAchievementRequirementService, AchievementRequirementService>();
+            services.AddTransient<IAchievementComponentService, AchievementComponentService>();
             services.AddTransient<IAttachmentService, AttachmentService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IDateTimeService, DateTimeService>();
@@ -30,9 +30,13 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMemberAchievementService, MemberAchievementService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
+            services.AddTransient<IRequirementService, RequirementService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
             services.AddTransient<ITrackedAchievementService, TrackedAchievementService>();
             services.AddTransient<IWorkContext, ApiWorkContext>();
+
+            // Add the various requirement validatiors; there can be multiple
+            services.AddTransient<IRequirementValidator, RequirementParameterValidator>();
 
             services.Configure<FileStorageConfig>(configuration.GetSection("FileStorage"));
 

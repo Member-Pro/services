@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace MemberPro.Core.Entities.Achievements
 {
-    public class Achievement : BaseEntity
+    public class AchievementComponent : BaseEntity
     {
+        public int AchievementId { get; set; }
+        public virtual Achievement Achievement { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public string InfoUrl { get; set; }
-
-        public string ImageFilename { get; set; }
 
         public int DisplayOrder { get; set; }
 
@@ -19,6 +18,6 @@ namespace MemberPro.Core.Entities.Achievements
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 
-        public virtual List<AchievementComponent> Components { get; set; } = new List<AchievementComponent>();
+        public virtual List<Requirement> Requirements { get; set; } = new List<Requirement>();
     }
 }

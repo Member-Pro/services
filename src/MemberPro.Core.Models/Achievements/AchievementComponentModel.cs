@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using MemberPro.Core.Entities.Achievements;
 
 namespace MemberPro.Core.Models.Achievements
 {
-    public class AchievementModel : BaseModel
+    public class AchievementComponentModel : BaseModel
     {
+        public int AchievementId { get; set; }
+        // public AchievementModel Achievement { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public string InfoUrl { get; set; }
-
-        public string ImageFilename { get; set; }
 
         public int DisplayOrder { get; set; }
 
@@ -19,16 +17,14 @@ namespace MemberPro.Core.Models.Achievements
 
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
+
+        public RequirementModel[] Requirements { get; set; }
     }
 
-    public class CreateAchievementModel
+    public class CreateAchievementComponentModel : BaseModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public string InfoUrl { get; set; }
-
-        public string ImageFilename { get; set; }
 
         public int DisplayOrder { get; set; }
 

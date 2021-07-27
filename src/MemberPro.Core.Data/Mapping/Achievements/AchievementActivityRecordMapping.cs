@@ -12,7 +12,7 @@ namespace MemberPro.Core.Data.Mapping.Achievements
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.AchievementId);
-            builder.Property(x => x.RequirementId);
+            builder.Property(x => x.ComponentId);
             builder.Property(x => x.MemberId);
 
             builder.Property(x => x.ActivityDate);
@@ -28,11 +28,10 @@ namespace MemberPro.Core.Data.Mapping.Achievements
                 .HasForeignKey(x => x.AchievementId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.Requirement)
+            builder.HasOne(x => x.Component)
                 .WithMany()
-                .IsRequired()
-                .HasForeignKey(x => x.RequirementId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(x => x.ComponentId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(x => x.Member)
                 .WithMany()
