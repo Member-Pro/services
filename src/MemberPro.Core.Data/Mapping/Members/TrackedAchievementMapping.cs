@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MemberPro.Core.Data.Mapping.Members
 {
-    public class TrackedAchievementMapping : EntityTypeConfiguration<TrackedAchievement>
+    public class FavoriteAchievementMapping : EntityTypeConfiguration<FavoriteAchievement>
     {
-        public override void Configure(EntityTypeBuilder<TrackedAchievement> builder)
+        public override void Configure(EntityTypeBuilder<FavoriteAchievement> builder)
         {
             builder.HasKey(x => x.Id);
 

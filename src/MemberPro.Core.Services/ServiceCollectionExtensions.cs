@@ -32,7 +32,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IRequirementService, RequirementService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
-            services.AddTransient<ITrackedAchievementService, TrackedAchievementService>();
+            services.AddTransient<IFavoriteAchievementService, FavoriteAchievementService>();
             services.AddTransient<IWorkContext, ApiWorkContext>();
 
             // Add the various requirement validatiors; there can be multiple

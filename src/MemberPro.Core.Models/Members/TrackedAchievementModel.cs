@@ -4,7 +4,7 @@ using MemberPro.Core.Entities.Members;
 
 namespace MemberPro.Core.Models.Members
 {
-    public class TrackedAchievementModel : BaseModel
+    public class FavoriteAchievementModel : BaseModel
     {
         public int MemberId { get; set; }
         public SimpleMemberModel Member { get; set; }
@@ -17,7 +17,7 @@ namespace MemberPro.Core.Models.Members
         public DateTime CreatedOn { get; set; }
     }
 
-    public class CreateTrackedAchievementModel
+    public class CreateFavoriteAchievementModel
     {
         public int MemberId { get; set; }
 
