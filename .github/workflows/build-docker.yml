@@ -43,6 +43,6 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build docker image and push to ECR so it can be deployed to ECS (separately)
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f .\src\MemberPro.Api\Dockerfile .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./src/MemberPro.Api/Dockerfile .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
