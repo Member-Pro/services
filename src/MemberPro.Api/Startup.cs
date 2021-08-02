@@ -39,7 +39,7 @@ namespace MemberPro.Api
 
             services.AddCors(x =>
             {
-                x.AddDefaultPolicy(policy =>
+                x.AddPolicy("memberpro", policy =>
                 {
                     policy.WithOrigins(Configuration["CORS:AllowedOrigin"]);
                     policy.AllowAnyMethod();
@@ -139,7 +139,7 @@ namespace MemberPro.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors();
+            app.UseCors("memberpro");
 
             app.UseSwagger();
             app.UseSwaggerUI(config =>
