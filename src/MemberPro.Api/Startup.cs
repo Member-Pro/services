@@ -39,9 +39,9 @@ namespace MemberPro.Api
 
             services.AddCors(x =>
             {
-                x.AddPolicy("Development", policy =>
+                x.AddDefaultPolicy(policy =>
                 {
-                    policy.WithOrigins("http://localhost:8080");
+                    policy.WithOrigins(Configuration["CORS:AllowedOrigin"]);
                     policy.AllowAnyMethod();
                     policy.AllowAnyHeader();
                     policy.AllowCredentials();
@@ -139,7 +139,7 @@ namespace MemberPro.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(env.EnvironmentName);
+            app.UseCors();
 
             app.UseSwagger();
             app.UseSwaggerUI(config =>
