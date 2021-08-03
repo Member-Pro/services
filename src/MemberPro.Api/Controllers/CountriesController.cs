@@ -4,12 +4,14 @@ using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Geography;
 using MemberPro.Core.Models.Geography;
 using MemberPro.Core.Services.Geography;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MemberPro.Api.Controllers
 {
     [ApiController]
     [Route("countries")]
+    [Authorize]
     public class CountriesController : ControllerBase
     {
         private readonly IRepository<Country> _countryRepository;
@@ -23,6 +25,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpGet("")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CountryModel>>> Get()
         {
             var countries = await _countryService.GetAllAsync();

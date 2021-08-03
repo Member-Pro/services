@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Security.Claims;
+using MemberPro.Api.Swagger;
 using MemberPro.Core.Data;
 using MemberPro.Core.Security;
 using MemberPro.Core.Services;
@@ -118,16 +119,9 @@ namespace MemberPro.Api
                         }
                     }
                 });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
-                        },
-                        new[] { "read" }
-                    }
-                });
+
+                // Security requirement is only applied to operations that require auth
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
         }
 

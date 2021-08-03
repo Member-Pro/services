@@ -21,6 +21,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<RegionModel>> GetById(int id)
         {
             var result = await _regionService.FindById(id);
@@ -33,6 +34,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpGet("")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RegionModel>>> Get()
         {
             var regions = await _regionService.GetAll();
