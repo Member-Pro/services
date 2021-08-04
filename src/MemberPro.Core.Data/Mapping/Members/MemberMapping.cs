@@ -20,11 +20,11 @@ namespace MemberPro.Core.Data.Mapping.Members
             builder.Property(x => x.DateOfBirth);
             builder.Property(x => x.CountryId);
             builder.Property(x => x.StateProvinceId);
-            builder.Property(x => x.Address).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.Address).HasMaxLength(50);
             builder.Property(x => x.Address2).HasMaxLength(50);
-            builder.Property(x => x.City).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.PostalCode).HasMaxLength(20).IsRequired();
-            builder.Property(x => x.PhoneNumber).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.City).HasMaxLength(50);
+            builder.Property(x => x.PostalCode).HasMaxLength(20);
+            builder.Property(x => x.PhoneNumber).HasMaxLength(20);
             builder.Property(x => x.ShowInDirectory);
             builder.Property(x => x.RegionId);
             builder.Property(x => x.DivisionId);
