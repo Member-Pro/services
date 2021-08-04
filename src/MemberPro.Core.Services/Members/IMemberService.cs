@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MemberPro.Core.Configuration;
 using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Members;
 using MemberPro.Core.Exceptions;
@@ -11,6 +16,7 @@ using MemberPro.Core.Models.Members;
 using MemberPro.Core.Services.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace MemberPro.Core.Services.Members
 {
@@ -27,20 +33,26 @@ namespace MemberPro.Core.Services.Members
 
     public class MemberService : IMemberService
     {
+        private readonly IAmazonCognitoIdentityProvider _cognitoIdentityProvider;
         private readonly IRepository<Member> _memberRepository;
         private readonly IDateTimeService _dateTimeService;
         private readonly IMapper _mapper;
         private readonly ILogger<MemberService> _logger;
+        private readonly AwsConfig _awsConfig;
 
-        public MemberService(IRepository<Member> memberRepository,
+        public MemberService(IAmazonCognitoIdentityProvider cognitoIdentityProvider,
+            IRepository<Member> memberRepository,
             IDateTimeService dateTimeService,
             IMapper mapper,
-            ILogger<MemberService> logger)
+            ILogger<MemberService> logger,
+            IOptions<AwsConfig> awsOptions)
         {
+            _cognitoIdentityProvider = cognitoIdentityProvider;
             _memberRepository = memberRepository;
             _dateTimeService = dateTimeService;
             _mapper = mapper;
             _logger = logger;
+            _awsConfig = awsOptions.Value;
         }
 
         public async Task<MemberModel>  FindByIdAsync(int id)
@@ -95,22 +107,48 @@ namespace MemberPro.Core.Services.Members
         {
             try
             {
+                string userSubjectId = null;
+
+                try
+                {
+                    var cognitoSignupRequest = new SignUpRequest
+                    {
+                        ClientId = _awsConfig.UserPoolClientId,
+                        Username = model.EmailAddress,
+                        Password = model.Password,
+                    };
+
+                    // TODO: If the UserPoolClient has a secret, a secret hash will need to be generated
+                    // Couldn't figure out how to get this to work yet though...
+                    // cognitoSignupRequest.SecretHash = GenerateCognitoSecretHash(model.EmailAddress);
+
+                    cognitoSignupRequest.UserAttributes = new List<AttributeType>
+                    {
+                        new AttributeType { Name = "email", Value = model.EmailAddress },
+                        new AttributeType { Name = "given_name", Value = model.FirstName },
+                        new AttributeType { Name = "family_name", Value = model.LastName },
+                    };
+
+                    var cognitoSignupResponse = await _cognitoIdentityProvider.SignUpAsync(cognitoSignupRequest);
+                    userSubjectId = cognitoSignupResponse.UserSub;
+                }
+                catch(Exception ex)
+                {
+                    // TODO: Be more specific about which exceptions we are catching and return the appropriate response
+                    _logger.LogError(ex, "Error creating user in Cognito");
+                    throw;
+                }
+
                 var member = new Member
                 {
-                    SubjectId = model.SubjectId,
+                    SubjectId = userSubjectId,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Status = MemberStatus.Active, // TODO: do we want to assume active?
+                    Status = MemberStatus.Active,
                     JoinedOn = _dateTimeService.NowUtc, // TODO: Probably shouldn't assume this either
                     EmailAddress = model.EmailAddress,
-                    DateOfBirth = model.DateOfBirth,
                     CountryId = model.CountryId,
                     StateProvinceId = model.StateProvinceId,
-                    Address = model.Address,
-                    Address2 = model.Address2,
-                    City = model.City,
-                    PostalCode = model.PostalCode,
-                    PhoneNumber = model.PhoneNumber,
                 };
 
                 await _memberRepository.CreateAsync(member);
@@ -163,6 +201,24 @@ namespace MemberPro.Core.Services.Members
                 _logger.LogError(ex, "Error updating member");
                 throw;
             }
+        }
+
+        private string GenerateCognitoSecretHash(string username)
+        {
+            var key = $"{username}{_awsConfig.UserPoolClientId}";
+
+            using var md5 = MD5.Create();
+
+            var inputBytes = Encoding.ASCII.GetBytes(key);
+            var hashBytes = md5.ComputeHash(inputBytes);
+
+            var sb = new StringBuilder();
+            for(var idx = 0; idx < hashBytes.Length; idx++)
+            {
+                sb.Append(hashBytes[idx].ToString("X2"));
+            }
+
+            return sb.ToString();
         }
     }
 }
