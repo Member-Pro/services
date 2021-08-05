@@ -51,7 +51,7 @@ namespace MemberPro.Api
 
             var awsCognitoUrl = Configuration["AWS:CognitoUrl"];
             var awsCognitoAuthUrlBase = Configuration["AWS:CognitoAuthUrlBase"];
-            var awsCognitoApiClientId = Configuration["AWS:CognitoApiClientId"];
+            var awsCognitoApiClientId = Configuration["AWS:UserPoolClientId"];
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

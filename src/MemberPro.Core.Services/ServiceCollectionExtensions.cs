@@ -1,3 +1,4 @@
+using Amazon.CognitoIdentityProvider;
 using Amazon.S3;
 using MemberPro.Core.Configuration;
 using MemberPro.Core.Models;
@@ -37,6 +38,9 @@ namespace MemberPro.Core.Services
 
             // Add the various requirement validatiors; there can be multiple
             services.AddTransient<IRequirementValidator, RequirementParameterValidator>();
+
+            services.Configure<AwsConfig>(configuration.GetSection("AWS"));
+            services.AddAWSService<IAmazonCognitoIdentityProvider>();
 
             services.Configure<FileStorageConfig>(configuration.GetSection("FileStorage"));
 
