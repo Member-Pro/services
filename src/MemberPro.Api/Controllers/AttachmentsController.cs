@@ -44,6 +44,14 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpGet("")]
+        public async Task<ActionResult<IEnumerable<AttachmentModel>>> GetAll()
+        {
+            var attachments = await _attachmentService.GetAll(_workContext.GetCurrentUserId());
+
+            return Ok(attachments);
+        }
+
+        [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<AttachmentModel>>> Search(string objectType, int objectId)
         {
             var attachments = await _attachmentService.GetByObjectAsync(objectType, objectId, _workContext.GetCurrentUserId());

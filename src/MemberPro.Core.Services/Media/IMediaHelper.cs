@@ -5,6 +5,7 @@ namespace MemberPro.Core.Services.Media
     public interface IMediaHelper
     {
         AttachmentType GetMediaTypeFromContentType(string contentType);
+        bool IsImageContentType(string contentType);
     }
 
     public class MediaHelper : IMediaHelper
@@ -29,5 +30,8 @@ namespace MemberPro.Core.Services.Media
                     return AttachmentType.OtherDocument;
             }
         }
+
+        public bool IsImageContentType(string contentType) =>
+            GetMediaTypeFromContentType(contentType) == AttachmentType.Photo;
     }
 }

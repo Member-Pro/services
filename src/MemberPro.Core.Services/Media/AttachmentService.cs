@@ -17,8 +17,11 @@ namespace MemberPro.Core.Services.Media
     public interface IAttachmentService
     {
         Task<AttachmentModel> FindByIdAsync(int id);
-        Task<AttachmentModel> CreateAsync(CreateAttachmentModel model, byte[] fileBytes);
+
+        Task<IEnumerable<AttachmentModel>> GetAll(int userId);
         Task<IEnumerable<AttachmentModel>> GetByObjectAsync(string objectType, int objectId, int userId);
+
+        Task<AttachmentModel> CreateAsync(CreateAttachmentModel model, byte[] fileBytes);
     }
 
     public class AttachmentService : IAttachmentService
@@ -57,6 +60,23 @@ namespace MemberPro.Core.Services.Media
 
             model.Url = _fileStorageService.ResolveFileUrl(path);
             return model;
+        }
+
+        public async Task<IEnumerable<AttachmentModel>> GetAll(int userId)
+        {
+            var attachments = await _attachmentRepository.TableNoTracking
+                .Where(x => x.OwnerId == userId)
+                .OrderByDescending(x => x.CreatedOn)
+                .ProjectTo<AttachmentModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            foreach(var attachment in attachments)
+            {
+                var path = GetFilePath(userId, attachment.ObjectType, attachment.FileName);
+                attachment.Url = _fileStorageService.ResolveFileUrl(path);
+            }
+
+            return attachments;
         }
 
         public async Task<IEnumerable<AttachmentModel>> GetByObjectAsync(string objectType, int objectId, int userId)
@@ -120,6 +140,6 @@ namespace MemberPro.Core.Services.Media
         }
 
         protected string GetFilePath(int userId, string objType, string fileName)
-            => $"/users/{userId}/{objType.ToLower()}/{fileName}";
+            => $"users/{userId}/{objType.ToLower()}/{fileName}";
     }
 }

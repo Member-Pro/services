@@ -1,5 +1,6 @@
 using Amazon.CognitoIdentityProvider;
 using Amazon.S3;
+using Amazon.SimpleNotificationService;
 using MemberPro.Core.Configuration;
 using MemberPro.Core.Models;
 using MemberPro.Core.Services.Achievements;
@@ -49,6 +50,7 @@ namespace MemberPro.Core.Services
             {
                 services.AddDefaultAWSOptions(configuration.GetAWSOptions());
                 services.AddAWSService<IAmazonS3>();
+                services.AddAWSService<IAmazonSimpleNotificationService>();
                 services.AddTransient<IFileStorageService, AmazonS3StorageService>();
             }
         }
