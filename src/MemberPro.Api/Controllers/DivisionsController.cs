@@ -43,6 +43,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPost("")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult<DivisionModel>> Create(int regionId, CreateDivisionModel model)
         {
             try

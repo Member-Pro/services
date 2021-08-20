@@ -29,9 +29,11 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMediaHelper, MediaHelper>();
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IMemberAchievementService, MemberAchievementService>();
+            services.AddTransient<IMemberRoleService, MemberRoleService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IRequirementService, RequirementService>();
+            services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();
             services.AddTransient<IFavoriteAchievementService, FavoriteAchievementService>();
             services.AddTransient<IWorkContext, ApiWorkContext>();

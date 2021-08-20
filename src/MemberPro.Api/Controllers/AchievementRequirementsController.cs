@@ -47,6 +47,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPost("/components/{componentId}/requirements")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult<RequirementModel>> Create(int componentId, RequirementModel model)
         {
             // TODO: Make a Create model...
@@ -56,6 +57,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult> Update(int id, RequirementModel model)
         {
             try

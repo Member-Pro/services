@@ -37,6 +37,8 @@ namespace MemberPro.Core.Models
             CreateMap<Member, MemberModel>();
             CreateMap<Member, SimpleMemberModel>();
             CreateMap<MemberRenewal, MemberRenewalModel>();
+            CreateMap<MemberRole, MemberRoleModel>();
+            CreateMap<Role, RoleModel>();
             CreateMap<FavoriteAchievement, FavoriteAchievementModel>();
 
             CreateMap<MembershipPlan, MembershipPlanModel>();
