@@ -18,6 +18,8 @@ namespace MemberPro.Core.Entities.Media
 
         public string FileName { get; set; }
 
+        public string SaveFileName { get; set; }
+
         public decimal FileSize { get; set; }
         public string ContentType { get; set; }
 

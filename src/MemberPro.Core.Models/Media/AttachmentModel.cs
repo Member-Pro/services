@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using MemberPro.Core.Entities.Media;
@@ -21,6 +22,7 @@ namespace MemberPro.Core.Models.Media
         public AttachmentType MediaType { get; set; }
 
         public string FileName { get; set; }
+        public string SaveFileName { get; set; }
 
         public decimal FileSize { get; set; }
         public string ContentType { get; set; }
@@ -30,6 +32,8 @@ namespace MemberPro.Core.Models.Media
         public DateTime CreatedOn { get; set; }
 
         public string Url { get; set; }
+
+        public Dictionary<string, string> VariantUrls { get; set; } = new Dictionary<string, string>();
     }
 
     public class CreateAttachmentModel

@@ -17,6 +17,7 @@ namespace MemberPro.Core.Data.Mapping.Media
 
             builder.Property(x => x.MediaType);
 
+            builder.Property(x => x.SaveFileName).IsRequired().HasMaxLength(255);
             builder.Property(x => x.FileName).IsRequired().HasMaxLength(255);
 
             builder.Property(x => x.FileSize);
