@@ -34,6 +34,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPost("")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult<AchievementModel>> Create(CreateAchievementModel model)
         {
             var result = await _achievementService.CreateAsync(model);

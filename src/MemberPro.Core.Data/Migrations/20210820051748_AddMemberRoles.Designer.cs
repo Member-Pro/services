@@ -5,15 +5,17 @@ using MemberPro.Core.Data.Implementations;
 using MemberPro.Core.Entities.Achievements;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MemberPro.Core.Data.Migrations
 {
     [DbContext(typeof(MemberProDbContext))]
-    partial class MemberProDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210820051748_AddMemberRoles")]
+    partial class AddMemberRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -432,12 +434,6 @@ namespace MemberPro.Core.Data.Migrations
                     b.Property<int>("OwnerId")
                         .HasColumnType("integer")
                         .HasColumnName("owner_id");
-
-                    b.Property<string>("SaveFileName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("save_file_name");
 
                     b.HasKey("Id")
                         .HasName("pk_attachment");

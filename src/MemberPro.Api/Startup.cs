@@ -4,12 +4,14 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Security.Claims;
+using MemberPro.Api.Security;
 using MemberPro.Api.Swagger;
 using MemberPro.Core.Data;
 using MemberPro.Core.Security;
 using MemberPro.Core.Services;
 using MemberPro.Core.Services.Members;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -90,7 +92,12 @@ namespace MemberPro.Api
                     };
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy(Policies.Admin, policy => policy.AddRequirements(new AdminUserRequirement()));
+            });
+
+            services.AddTransient<IAuthorizationHandler, AdminUserAuthorizationHandler>();
 
             services.AddSwaggerGen(options =>
             {

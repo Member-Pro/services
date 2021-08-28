@@ -36,6 +36,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPost("")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult<AchievementModel>> Create(int achievementId, CreateAchievementComponentModel model)
         {
             var result = await _componentService.CreateAsync(achievementId, model);
@@ -44,6 +45,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult> Update(int achievementId, int id, AchievementComponentModel model)
         {
             model.Id = id;
