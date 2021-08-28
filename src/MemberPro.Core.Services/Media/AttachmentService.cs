@@ -17,8 +17,11 @@ namespace MemberPro.Core.Services.Media
     public interface IAttachmentService
     {
         Task<AttachmentModel> FindByIdAsync(int id);
-        Task<AttachmentModel> CreateAsync(CreateAttachmentModel model, byte[] fileBytes);
+
+        Task<IEnumerable<AttachmentModel>> GetAll(int userId);
         Task<IEnumerable<AttachmentModel>> GetByObjectAsync(string objectType, int objectId, int userId);
+
+        Task<AttachmentModel> CreateAsync(CreateAttachmentModel model, byte[] fileBytes);
     }
 
     public class AttachmentService : IAttachmentService
@@ -29,6 +32,8 @@ namespace MemberPro.Core.Services.Media
         private readonly IMediaHelper _mediaHelper;
         private readonly IMapper _mapper;
         private readonly ILogger<AttachmentService> _logger;
+
+        private readonly string[] _imageSizeKeys = new[] { "square_150", "thumb", "small_240", "medium_640", "large_1024", "large_1600" };
 
         public AttachmentService(IRepository<Attachment> attachmentRepository,
             IDateTimeService dateTimeService,
@@ -59,6 +64,33 @@ namespace MemberPro.Core.Services.Media
             return model;
         }
 
+        public async Task<IEnumerable<AttachmentModel>> GetAll(int userId)
+        {
+            var attachments = await _attachmentRepository.TableNoTracking
+                .Where(x => x.OwnerId == userId)
+                .OrderByDescending(x => x.CreatedOn)
+                .ProjectTo<AttachmentModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            foreach(var attachment in attachments)
+            {
+                var path = GetFilePath(userId, attachment.ObjectType, attachment.FileName);
+                attachment.Url = _fileStorageService.ResolveFileUrl(path);
+
+                if (attachment.MediaType == AttachmentType.Photo)
+                {
+                    foreach (var sizeKey in _imageSizeKeys)
+                    {
+                        var fileName = _mediaHelper.GetResizedImageName(attachment.SaveFileName, sizeKey);
+                        var filePath = GetFilePath(userId, attachment.ObjectType, fileName);
+                        attachment.VariantUrls.Add(sizeKey, _fileStorageService.ResolveFileUrl(filePath));
+                    }
+                }
+            }
+
+            return attachments;
+        }
+
         public async Task<IEnumerable<AttachmentModel>> GetByObjectAsync(string objectType, int objectId, int userId)
         {
             var attachments = await _attachmentRepository.TableNoTracking
@@ -71,8 +103,18 @@ namespace MemberPro.Core.Services.Media
 
             foreach(var attachment in attachments)
             {
-                var path = GetFilePath(userId, attachment.ObjectType, attachment.FileName);
+                var path = GetFilePath(userId, attachment.ObjectType, attachment.SaveFileName);
                 attachment.Url = _fileStorageService.ResolveFileUrl(path);
+
+                if (attachment.MediaType == AttachmentType.Photo)
+                {
+                    foreach (var sizeKey in _imageSizeKeys)
+                    {
+                        var fileName = _mediaHelper.GetResizedImageName(attachment.SaveFileName, sizeKey);
+                        var filePath = GetFilePath(userId, attachment.ObjectType, fileName);
+                        attachment.VariantUrls.Add(sizeKey, _fileStorageService.ResolveFileUrl(filePath));
+                    }
+                }
             }
 
             return attachments;
@@ -82,11 +124,13 @@ namespace MemberPro.Core.Services.Media
         {
             try
             {
+                // TODO: Save file with a GUID filename to ensure uniqueness in storage
                 // TODO: Need to get content type, probabl shouldn't assume it's being passed in
                 // TODO: If image, create thumbnails
                 // TODO: (nice to have) if document, can we somehow have a thumbnail
 
-                var savePath = GetFilePath(model.OwnerId, model.ObjectType, model.FileName);
+                var saveFileName = $"{Guid.NewGuid()}{Path.GetExtension(model.FileName)}";
+                var savePath = GetFilePath(model.OwnerId, model.ObjectType, saveFileName);
 
                 using (var memStream = new MemoryStream(fileBytes))
                 {
@@ -102,6 +146,7 @@ namespace MemberPro.Core.Services.Media
                     ObjectId = model.ObjectId,
                     MediaType = mediaType,
                     FileName = model.FileName,
+                    SaveFileName = saveFileName,
                     FileSize = model.FileSize,
                     ContentType = model.ContentType,
                     CreatedOn = _dateTimeService.NowUtc,
@@ -120,6 +165,6 @@ namespace MemberPro.Core.Services.Media
         }
 
         protected string GetFilePath(int userId, string objType, string fileName)
-            => $"/users/{userId}/{objType.ToLower()}/{fileName}";
+            => $"users/{userId}/{objType.ToLower()}/{fileName}";
     }
 }
