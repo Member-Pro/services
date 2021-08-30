@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Media;
+using MemberPro.Core.Exceptions;
 using MemberPro.Core.Models.Media;
 using MemberPro.Core.Services.Common;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace MemberPro.Core.Services.Media
         Task<IEnumerable<AttachmentModel>> GetByObjectAsync(string objectType, int objectId, int userId);
 
         Task<AttachmentModel> CreateAsync(CreateAttachmentModel model, byte[] fileBytes);
+        Task DeleteAsync(int id);
     }
 
     public class AttachmentService : IAttachmentService
@@ -124,9 +126,7 @@ namespace MemberPro.Core.Services.Media
         {
             try
             {
-                // TODO: Save file with a GUID filename to ensure uniqueness in storage
                 // TODO: Need to get content type, probabl shouldn't assume it's being passed in
-                // TODO: If image, create thumbnails
                 // TODO: (nice to have) if document, can we somehow have a thumbnail
 
                 var saveFileName = $"{Guid.NewGuid()}{Path.GetExtension(model.FileName)}";
@@ -160,6 +160,54 @@ namespace MemberPro.Core.Services.Media
             catch(Exception ex)
             {
                 _logger.LogError(ex, "Error saving attachment record");
+                throw;
+            }
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var attachmentEntity = await _attachmentRepository.GetByIdAsync(id);
+            if (attachmentEntity is null)
+            {
+                throw new ItemNotFoundException($"Attachment ID {id} not found");
+            }
+
+            _logger.LogInformation($"Deleting attachment ID {id}");
+
+            try
+            {
+                // Delete the record first...
+                await _attachmentRepository.DeleteAsync(attachmentEntity);
+
+                _logger.LogDebug($"Deleted attachment record ID {id}");
+
+                // Delete the original
+                var filePath = GetFilePath(attachmentEntity.OwnerId, attachmentEntity.ObjectType, attachmentEntity.SaveFileName);
+                await _fileStorageService.DeleteFileAsync(filePath);
+
+                _logger.LogDebug($"Deleted file {attachmentEntity.SaveFileName} (attachment ID {id})");
+
+                // If image, delete all the resizes...
+                if (attachmentEntity.MediaType == AttachmentType.Photo)
+                {
+                    _logger.LogDebug($"Attachment ID {id} is Photo... deleting resized images...");
+
+                    foreach(var imgSize in _imageSizeKeys)
+                    {
+                        var sizeFileName = _mediaHelper.GetResizedImageName(attachmentEntity.SaveFileName, imgSize);
+                        var sizePath = GetFilePath(attachmentEntity.OwnerId, attachmentEntity.ObjectType, sizeFileName);
+
+                        _logger.LogDebug($"...deleting file {sizePath} (attachment ID {id})");
+
+                        await _fileStorageService.DeleteFileAsync(sizePath);
+
+                        _logger.LogDebug($"... deleted file {sizePath} (attachment ID {id})");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"Error deleting attachment {id}");
                 throw;
             }
         }

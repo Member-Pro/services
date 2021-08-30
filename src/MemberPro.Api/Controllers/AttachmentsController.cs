@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using MemberPro.Core.Exceptions;
 using MemberPro.Core.Models.Media;
 using MemberPro.Core.Security;
 using MemberPro.Core.Services;
@@ -80,6 +81,31 @@ namespace MemberPro.Api.Controllers
                 return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
             }
             catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var attachment = await _attachmentService.FindByIdAsync(id);
+            if (attachment is null || attachment.OwnerId != _workContext.GetCurrentUserId())
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                await _attachmentService.DeleteAsync(id);
+
+                return NoContent();
+            }
+            catch(ItemNotFoundException)
+            {
+                return NotFound();
+            }
+            catch(Exception)
             {
                 return StatusCode(500);
             }
