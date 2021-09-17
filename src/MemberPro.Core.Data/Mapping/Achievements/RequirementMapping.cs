@@ -23,6 +23,9 @@ namespace MemberPro.Core.Data.Mapping.Achievements
             builder.Property(x => x.MinCount);
             builder.Property(x => x.MaxCount);
 
+            builder.Property(x => x.IsDeleted);
+            builder.HasQueryFilter(x => x.IsDeleted == false);
+
             builder.HasOne(x => x.Component)
                 .WithMany(x => x.Requirements)
                 .HasForeignKey(x => x.ComponentId)

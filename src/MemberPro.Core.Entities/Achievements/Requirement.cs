@@ -19,6 +19,8 @@ namespace MemberPro.Core.Entities.Achievements
         public decimal? MinCount { get; set; }
 
         public decimal? MaxCount { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 
     public class RequirementValidationParameter
@@ -43,7 +45,10 @@ namespace MemberPro.Core.Entities.Achievements
         TextArea = 2,
         Checkbox = 5,
         DatePicker = 6,
-        DropDownList = 10
+        DropDownList = 10,
+
+        FileSelectorSingle = 20,
+        FileSelectorMultiple = 21,
     }
 
     public enum RequirementType

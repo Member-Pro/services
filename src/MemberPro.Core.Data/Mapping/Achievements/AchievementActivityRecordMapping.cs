@@ -38,6 +38,8 @@ namespace MemberPro.Core.Data.Mapping.Achievements
                 .IsRequired()
                 .HasForeignKey(x => x.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasQueryFilter(x => x.Achievement.IsDeleted == false);
         }
     }
 }

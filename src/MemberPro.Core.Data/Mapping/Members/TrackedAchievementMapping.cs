@@ -28,6 +28,8 @@ namespace MemberPro.Core.Data.Mapping.Members
                 .WithMany()
                 .HasForeignKey(x => x.AchievementId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(x => x.Achievement.IsDeleted == false);
         }
     }
 }

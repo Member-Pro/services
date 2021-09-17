@@ -18,6 +18,8 @@ namespace MemberPro.Core.Entities.Achievements
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual List<Requirement> Requirements { get; set; } = new List<Requirement>();
     }
 }

@@ -18,6 +18,9 @@ namespace MemberPro.Core.Data.Mapping.Achievements
             builder.Property(x => x.CreatedOn);
             builder.Property(x => x.UpdatedOn);
 
+            builder.Property(x => x.IsDeleted);
+            builder.HasQueryFilter(x => x.IsDeleted == false);
+
             builder.HasMany(x => x.Requirements)
                 .WithOne(x => x.Component)
                 .IsRequired()

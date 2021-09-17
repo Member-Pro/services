@@ -32,6 +32,8 @@ namespace MemberPro.Core.Data.Mapping.Members
                 .WithMany()
                 .IsRequired()
                 .HasForeignKey(x => x.CreatedByMemberId);
+
+            builder.HasQueryFilter(x => x.Achievement.IsDeleted == false);
         }
     }
 
