@@ -74,5 +74,24 @@ namespace MemberPro.Api.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpDelete("{id}")]
+        [Authorize(Policy = Policies.Admin)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                await _requirementService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch(ItemNotFoundException)
+            {
+                return NotFound();
+            }
+            catch(Exception)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }

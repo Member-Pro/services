@@ -24,6 +24,8 @@ namespace MemberPro.Core.Services.Achievements
         Task<RequirementModel> CreateAsync(int componentId, RequirementModel model);
         Task UpdateAsync(RequirementModel model);
 
+        Task DeleteAsync(int id);
+
         Task<IEnumerable<MemberRequirementStateModel>> GetStatesForAchievementIdAsync(int memberId, int achievementId);
         Task<MemberRequirementStateModel> GetStateForRequirementAsync(int memberId, int requirementId);
         Task<MemberRequirementStateModel> UpdateStateAsync(UpdateMemberRequirementStateModel model, bool validate = true);
@@ -161,7 +163,7 @@ namespace MemberPro.Core.Services.Achievements
             var requirement = await _requirementRepository.GetByIdAsync(model.Id);
             if (requirement == null)
             {
-                throw new ItemNotFoundException($"Component ID {model.Id} not found.");
+                throw new ItemNotFoundException($"Requirement ID {model.Id} not found.");
             }
 
             try
@@ -186,6 +188,28 @@ namespace MemberPro.Core.Services.Achievements
                 throw new ApplicationException("Error updating requirement", ex);
             }
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var requirement = await _requirementRepository.GetByIdAsync(id);
+            if (requirement == null)
+            {
+                throw new ItemNotFoundException($"Requirement ID {id} not found.");
+            }
+
+            try
+            {
+                requirement.IsDeleted = true;
+                await _requirementRepository.UpdateAsync(requirement);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error soft-deleting requirement");
+
+                throw new ApplicationException("Error soft-deleting requirement", ex);
+            }
+        }
+
         public async Task<IEnumerable<MemberRequirementStateModel>> GetStatesForAchievementIdAsync(int memberId, int achievementId)
         {
             var states = await _memberRequirementStateRepository.TableNoTracking
