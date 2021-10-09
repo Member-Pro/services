@@ -44,7 +44,7 @@ namespace MemberPro.Api
             {
                 x.AddPolicy("memberpro", policy =>
                 {
-                    policy.WithOrigins(Configuration["CORS:AllowedOrigin"]);
+                    policy.WithOrigins(Configuration["CORS:AllowedOrigin"].Split(';'));
                     policy.AllowAnyMethod();
                     policy.AllowAnyHeader();
                     policy.AllowCredentials();
