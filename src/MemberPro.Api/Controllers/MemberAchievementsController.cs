@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MemberPro.Core.Models.Members;
 using MemberPro.Core.Security;
+using MemberPro.Core.Services;
 using MemberPro.Core.Services.Members;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,15 @@ namespace MemberPro.Api.Controllers
     {
         private readonly IMemberAchievementService _memberAchievementService;
         private readonly ILogger<MemberAchievementsController> _logger;
+        private readonly IWorkContext _workContext;
 
         public MemberAchievementsController(IMemberAchievementService memberAchievementService,
-            ILogger<MemberAchievementsController> logger)
+            ILogger<MemberAchievementsController> logger,
+            IWorkContext workContext)
         {
             _memberAchievementService = memberAchievementService;
             _logger = logger;
+            _workContext = workContext;
         }
 
         [HttpGet("")]
@@ -51,7 +55,7 @@ namespace MemberPro.Api.Controllers
             try
             {
                 model.MemberId = memberId;
-                model.CreatedByMemberId = User.GetUserId();
+                model.CreatedByMemberId = _workContext.GetCurrentUserId();
 
                 var result = await _memberAchievementService.Create(model);
 

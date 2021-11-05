@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MemberPro.Core.Models.Members;
 using MemberPro.Core.Security;
+using MemberPro.Core.Services;
 using MemberPro.Core.Services.Members;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,19 @@ namespace MemberPro.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMemberService _memberService;
+        private readonly IWorkContext _workContext;
 
-        public UserController(IMemberService memberService)
+        public UserController(IMemberService memberService,
+            IWorkContext workContext)
         {
             _memberService = memberService;
+            _workContext = workContext;
         }
 
         [HttpGet("current")]
         public async Task<ActionResult<MemberModel>> CurrentUser()
         {
-            var userId = User.GetUserId();
+            var userId = _workContext.GetCurrentUserId();
 
             var member = await _memberService.FindByIdAsync(userId);
 
@@ -41,7 +45,7 @@ namespace MemberPro.Api.Controllers
         [HttpPut("")]
         public async Task<ActionResult<MemberModel>> Update(MemberModel model)
         {
-            model.Id = User.GetUserId(); // set the ID to the current user
+            model.Id = _workContext.GetCurrentUserId(); // set the ID to the current user
 
             await _memberService.UpdateAsync(model);
 

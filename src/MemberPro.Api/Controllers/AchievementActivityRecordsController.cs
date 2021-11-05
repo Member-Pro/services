@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MemberPro.Core.Exceptions;
 using MemberPro.Core.Models.Achievements;
 using MemberPro.Core.Security;
+using MemberPro.Core.Services;
 using MemberPro.Core.Services.Achievements;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,13 @@ namespace MemberPro.Api.Controllers
     public class AchievementActivitiesController : ControllerBase
     {
         private readonly IAchievementActivityService _activityService;
+        private readonly IWorkContext _workContext;
 
-        public AchievementActivitiesController(IAchievementActivityService activityService)
+        public AchievementActivitiesController(IAchievementActivityService activityService,
+            IWorkContext workContext)
         {
             _activityService = activityService;
+            _workContext = workContext;
         }
 
         [HttpGet("{id}")]
@@ -33,7 +37,7 @@ namespace MemberPro.Api.Controllers
         public async Task<ActionResult<List<AchievementActivityModel>>> GetByAchievement(int achievementId,
             int? requirementId = null)
         {
-            var requirements = await _activityService.GetByMemberIdAsync(achievementId, User.GetUserId(), requirementId);
+            var requirements = await _activityService.GetByMemberIdAsync(achievementId, _workContext.GetCurrentUserId(), requirementId);
             return Ok(requirements);
         }
 
@@ -41,7 +45,7 @@ namespace MemberPro.Api.Controllers
         public async Task<ActionResult<AchievementModel>> Create(int achievementId, CreateAchievementActivityModel model)
         {
             model.AchievementId = achievementId;
-            model.MemberId = User.GetUserId();
+            model.MemberId = _workContext.GetCurrentUserId();
 
             var result = await _activityService.CreateAsync(model);
 
@@ -56,7 +60,7 @@ namespace MemberPro.Api.Controllers
             try
             {
                 model.Id = id;
-                model.MemberId = User.GetUserId();
+                model.MemberId = _workContext.GetCurrentUserId();
                 model.AchievementId = achievementId;
 
                 await _activityService.UpdateAsync(model);
