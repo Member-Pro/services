@@ -26,7 +26,7 @@ namespace MemberPro.Core.Services.Members
         Task<MemberModel> FindByEmailAsync(string email);
         Task<MemberModel> FindBySubjectIdAsync(string subjectId);
 
-        Task<IEnumerable<MemberModel>> SearchAsync();
+        Task<IEnumerable<MemberModel>> SearchAsync(SearchMembersModel search = null);
         Task<MemberModel> RegisterAsync(RegisterUserModel model);
         Task<MemberModel> UpdateAsync(MemberModel model);
     }
@@ -88,13 +88,31 @@ namespace MemberPro.Core.Services.Members
             return _mapper.Map<MemberModel>(member);
         }
 
-        public async Task<IEnumerable<MemberModel>> SearchAsync()
+        public async Task<IEnumerable<MemberModel>> SearchAsync(SearchMembersModel searchModel = null)
         {
+            if (searchModel is null)
+            {
+                searchModel = new SearchMembersModel();
+            }
+
             var members = await _memberRepository.TableNoTracking
                 .Include(x => x.Country)
                 .Include(x => x.StateProvince)
                 .Include(x => x.Region)
                 .Include(x => x.Division)
+                .WhereIf(!string.IsNullOrEmpty(searchModel.FirstName), x => x.FirstName.ToLower().Contains(searchModel.FirstName.ToLower()))
+                .WhereIf(!string.IsNullOrEmpty(searchModel.LastName), x => x.LastName.ToLower().Contains(searchModel.LastName.ToLower()))
+                .WhereIf(!string.IsNullOrEmpty(searchModel.EmailAddress), x => x.EmailAddress.ToLower().Contains(searchModel.EmailAddress.ToLower()))
+                .WhereIf(searchModel.CountryId.HasValue, x => x.CountryId == searchModel.CountryId.Value)
+                .WhereIf(searchModel.StateProvinceId.HasValue, x => x.StateProvinceId == searchModel.StateProvinceId.Value)
+                .WhereIf(searchModel.ShowInDirectory.HasValue, x => x.ShowInDirectory == searchModel.ShowInDirectory.Value)
+                .WhereIf(searchModel.RegionId.HasValue, x => x.RegionId == searchModel.RegionId.Value)
+                .WhereIf(searchModel.DivisionId.HasValue, x => x.DivisionId == searchModel.DivisionId.Value)
+                .WhereIf(searchModel.PlanId.HasValue, x => x.CurrentPlanId == searchModel.PlanId.Value)
+                .WhereIf(searchModel.JoinedOnFrom.HasValue, x => x.JoinedOn.Date >= searchModel.JoinedOnFrom.Value.Date)
+                .WhereIf(searchModel.JoinedOnTo.HasValue, x => x.JoinedOn.Date <= searchModel.JoinedOnTo.Value.Date)
+                .WhereIf(searchModel.DateOfBirthFrom.HasValue, x => x.DateOfBirth.Date >= searchModel.DateOfBirthFrom.Value.Date)
+                .WhereIf(searchModel.DateOfBirthTo.HasValue, x => x.DateOfBirth.Date <= searchModel.DateOfBirthTo.Value.Date)
                 .OrderBy(x => x.LastName)
                 .ThenBy(x => x.FirstName)
                 .ProjectTo<MemberModel>(_mapper.ConfigurationProvider)

@@ -1,6 +1,7 @@
 using System;
 using MemberPro.Core.Entities.Members;
 using MemberPro.Core.Models.Geography;
+using MemberPro.Core.Models.Plans;
 
 namespace MemberPro.Core.Models.Members
 {
@@ -39,6 +40,9 @@ namespace MemberPro.Core.Models.Members
         public string Biography { get; set; }
         public string Interests { get; set; }
 
+        public int? CurrentPlanId { get; set; }
+        public virtual MembershipPlanModel CurrentPlan { get; set; }
+
         //public virtual List<MemberCustomFieldValue> FieldValues { get; set; } = new List<MemberCustomFieldValue>();
 
         //public virtual List<MemberRenewalModel> Renewals { get; set; } = new List<MemberRenewalModel>();
@@ -69,5 +73,13 @@ namespace MemberPro.Core.Models.Members
 
         public int CountryId { get; set; }
         public int StateProvinceId { get; set; }
+
+        public string Address { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public int PlanId { get; set; }
     }
 }

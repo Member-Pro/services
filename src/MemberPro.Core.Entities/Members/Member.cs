@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemberPro.Core.Entities.Geography;
+using MemberPro.Core.Entities.Plans;
 
 namespace MemberPro.Core.Entities.Members
 {
@@ -40,6 +41,9 @@ namespace MemberPro.Core.Entities.Members
 
         public string Biography { get; set; }
         public string Interests { get; set; }
+
+        public int? CurrentPlanId { get; set; }
+        public virtual MembershipPlan CurrentPlan { get; set; }
 
         public virtual List<MemberCustomFieldValue> FieldValues { get; set; } = new List<MemberCustomFieldValue>();
 
