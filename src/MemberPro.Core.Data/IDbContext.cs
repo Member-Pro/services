@@ -11,6 +11,11 @@ namespace MemberPro.Core.Data
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class, new();
 
+        /// <summary>
+        /// Save the changes synchronously. Should onl be used for unit test database seeding.
+        /// </summary>
+        int SaveChanges();
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

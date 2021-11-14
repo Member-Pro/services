@@ -32,6 +32,7 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpGet("")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<MembershipPlanModel>>> List()
         {
             var plans = await _membershipPlanService.GetAllAsync();

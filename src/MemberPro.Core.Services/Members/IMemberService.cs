@@ -123,6 +123,9 @@ namespace MemberPro.Core.Services.Members
 
         public async Task<MemberModel> RegisterAsync(RegisterUserModel model)
         {
+            // TODO: Validate and save the member's plan
+            // TODO: Workflow (emails, etc)
+
             try
             {
                 string userSubjectId = null;
@@ -167,6 +170,11 @@ namespace MemberPro.Core.Services.Members
                     EmailAddress = model.EmailAddress,
                     CountryId = model.CountryId,
                     StateProvinceId = model.StateProvinceId,
+                    Address = model.Address,
+                    Address2 = model.Address2,
+                    City = model.City,
+                    PostalCode = model.PostalCode,
+                    PhoneNumber = model.PhoneNumber,
                 };
 
                 await _memberRepository.CreateAsync(member);
