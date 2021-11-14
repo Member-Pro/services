@@ -1,4 +1,5 @@
 using MemberPro.Core.Entities.Media;
+using MemberPro.Core.Enums;
 
 namespace MemberPro.Core.Services.Media
 {

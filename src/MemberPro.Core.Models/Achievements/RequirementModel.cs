@@ -1,4 +1,4 @@
-using MemberPro.Core.Entities.Achievements;
+using MemberPro.Core.Enums;
 
 namespace MemberPro.Core.Models.Achievements
 {

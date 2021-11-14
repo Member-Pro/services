@@ -11,6 +11,7 @@ using AutoMapper.QueryableExtensions;
 using MemberPro.Core.Configuration;
 using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Members;
+using MemberPro.Core.Enums;
 using MemberPro.Core.Exceptions;
 using MemberPro.Core.Models.Members;
 using MemberPro.Core.Services.Common;
@@ -209,7 +210,7 @@ namespace MemberPro.Core.Services.Members
                 member.City = model.City;
                 member.PostalCode = model.PostalCode;
                 member.PhoneNumber = model.PhoneNumber;
-                member.Organization = model.Organization;
+                // member.OrganizationId = model.OrganizationId;
                 member.ShowInDirectory = model.ShowInDirectory;
                 member.Biography = model.Biography;
                 member.Interests = model.Interests;

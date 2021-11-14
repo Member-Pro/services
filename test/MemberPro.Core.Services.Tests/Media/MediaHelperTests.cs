@@ -1,6 +1,7 @@
 using Xunit;
 using MemberPro.Core.Services.Media;
 using MemberPro.Core.Entities.Media;
+using MemberPro.Core.Enums;
 
 namespace MemberPro.Core.Services.Tests.Media
 {

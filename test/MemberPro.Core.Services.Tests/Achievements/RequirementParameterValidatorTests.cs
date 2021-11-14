@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MemberPro.Core.Entities.Achievements;
+using MemberPro.Core.Enums;
 using MemberPro.Core.Models.Achievements;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                 },
@@ -59,7 +60,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                 },
@@ -99,13 +100,13 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam2",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                 },
@@ -146,13 +147,13 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam2",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                 },
@@ -193,13 +194,13 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam2",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                 },
@@ -240,13 +241,13 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam2",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = false,
                     },
                 },
@@ -287,13 +288,13 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = true,
                     },
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam2",
-                        InputType = ParameterInputType.TextArea.ToString("D"),
+                        InputType = FormInputType.TextArea.ToString("D"),
                         IsRequired = false,
                     },
                 },
@@ -334,7 +335,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextBox.ToString("D"),
+                        InputType = FormInputType.TextBox.ToString("D"),
                         IsRequired = true,
                         Minimum = 10.00m,
                         Maximum = 25.00m
@@ -376,7 +377,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextBox.ToString("D"),
+                        InputType = FormInputType.TextBox.ToString("D"),
                         IsRequired = true,
                         Minimum = 10.00m,
                         Maximum = 25.00m
@@ -418,7 +419,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextBox.ToString("D"),
+                        InputType = FormInputType.TextBox.ToString("D"),
                         IsRequired = true,
                         Minimum = 10.00m,
                     },
@@ -459,7 +460,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextBox.ToString("D"),
+                        InputType = FormInputType.TextBox.ToString("D"),
                         IsRequired = true,
                         Minimum = 10.00m,
                     },
@@ -500,7 +501,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextBox.ToString("D"),
+                        InputType = FormInputType.TextBox.ToString("D"),
                         IsRequired = true,
                         Maximum = 90.00m,
                     },
@@ -541,7 +542,7 @@ namespace MemberPro.Core.Services.Achievements.Tests
                     new RequirementValidationParameterModel
                     {
                         Key = "testparam1",
-                        InputType = ParameterInputType.TextBox.ToString("D"),
+                        InputType = FormInputType.TextBox.ToString("D"),
                         IsRequired = true,
                         Maximum = 90.00m,
                     },

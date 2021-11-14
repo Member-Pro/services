@@ -1,7 +1,7 @@
 using System;
-using MemberPro.Core.Entities.Members;
-using MemberPro.Core.Entities.Organizations;
+using MemberPro.Core.Enums;
 using MemberPro.Core.Models.Geography;
+using MemberPro.Core.Models.Organizations;
 using MemberPro.Core.Models.Plans;
 
 namespace MemberPro.Core.Models.Members
@@ -33,7 +33,7 @@ namespace MemberPro.Core.Models.Members
         public bool ShowInDirectory { get; set; }
 
         public int OrganizationId { get; set; }
-        public Organization Organization { get; set; }
+        public OrganizationModel Organization { get; set; }
 
         public string Biography { get; set; }
         public string Interests { get; set; }

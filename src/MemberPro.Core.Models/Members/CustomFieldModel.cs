@@ -1,4 +1,4 @@
-using MemberPro.Core.Entities.Members;
+using MemberPro.Core.Enums;
 
 namespace MemberPro.Core.Models.Members
 {
@@ -11,7 +11,7 @@ namespace MemberPro.Core.Models.Members
 
         public bool IsRequired { get; set; }
 
-        public CustomFieldType FieldType { get; set; }
+        public FormInputType FieldType { get; set; }
         public string ValueOptions { get; set; }
     }
 }

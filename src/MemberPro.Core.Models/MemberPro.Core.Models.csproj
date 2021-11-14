@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MemberPro.Core.Entities\MemberPro.Core.Entities.csproj" />
+    <ProjectReference Include="..\MemberPro.Core\MemberPro.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

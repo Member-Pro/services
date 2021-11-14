@@ -1,5 +1,6 @@
 using System;
 using MemberPro.Core.Entities.Members;
+using MemberPro.Core.Enums;
 
 namespace MemberPro.Core.Entities.Media
 {
@@ -26,16 +27,5 @@ namespace MemberPro.Core.Entities.Media
         public string Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
-    }
-
-    public enum AttachmentType
-    {
-        Photo = 1,
-
-        Pdf = 5,
-        WordDocument = 6,
-        ExcelDocument = 7,
-
-        OtherDocument = 10,
     }
 }

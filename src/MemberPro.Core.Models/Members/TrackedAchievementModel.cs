@@ -1,6 +1,5 @@
 using System;
-using MemberPro.Core.Entities.Achievements;
-using MemberPro.Core.Entities.Members;
+using MemberPro.Core.Models.Achievements;
 
 namespace MemberPro.Core.Models.Members
 {
@@ -10,7 +9,7 @@ namespace MemberPro.Core.Models.Members
         public SimpleMemberModel Member { get; set; }
 
         public int AchievementId { get; set; }
-        public Achievement Achievement { get; set; }
+        public AchievementModel Achievement { get; set; }
 
         public string Notes { get; set; }
 

@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Media;
+using MemberPro.Core.Enums;
 using MemberPro.Core.Exceptions;
 using MemberPro.Core.Models.Media;
 using MemberPro.Core.Services.Common;

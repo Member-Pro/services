@@ -1,3 +1,5 @@
+using MemberPro.Core.Enums;
+
 namespace MemberPro.Core.Entities.Members
 {
     public class CustomField : BaseEntity
@@ -9,7 +11,7 @@ namespace MemberPro.Core.Entities.Members
 
         public bool IsRequired { get; set; }
 
-        public CustomFieldType FieldType { get; set; }
+        public FormInputType FieldType { get; set; }
         public string ValueOptions { get; set; }
     }
 }

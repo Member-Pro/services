@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MemberPro.Core.Entities.Geography;
 using MemberPro.Core.Entities.Organizations;
 using MemberPro.Core.Entities.Plans;
+using MemberPro.Core.Enums;
 
 namespace MemberPro.Core.Entities.Members
 {

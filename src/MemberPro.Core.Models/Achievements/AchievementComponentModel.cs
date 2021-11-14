@@ -1,5 +1,4 @@
 using System;
-using MemberPro.Core.Entities.Achievements;
 
 namespace MemberPro.Core.Models.Achievements
 {

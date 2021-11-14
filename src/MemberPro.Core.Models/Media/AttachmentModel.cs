@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using MemberPro.Core.Entities.Media;
+using MemberPro.Core.Enums;
 using MemberPro.Core.Models.Members;
 
 namespace MemberPro.Core.Models.Media

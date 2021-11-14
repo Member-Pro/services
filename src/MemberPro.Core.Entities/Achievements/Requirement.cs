@@ -1,3 +1,5 @@
+using MemberPro.Core.Enums;
+
 namespace MemberPro.Core.Entities.Achievements
 {
     public class Requirement : BaseEntity
@@ -30,33 +32,12 @@ namespace MemberPro.Core.Entities.Achievements
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public ParameterInputType InputType { get; set; }
+        public FormInputType InputType { get; set; }
         public string[] Options { get; set; }
 
         public bool IsRequired { get; set; }
 
         public decimal? Minimum { get; set; }
         public decimal? Maximum { get; set; }
-    }
-
-    public enum ParameterInputType
-    {
-        TextBox = 1,
-        TextArea = 2,
-        Checkbox = 5,
-        DatePicker = 6,
-        DropDownList = 10,
-
-        FileSelectorSingle = 20,
-        FileSelectorMultiple = 21,
-    }
-
-    public enum RequirementType
-    {
-        Completion = 1,
-
-        Score = 2,
-        Count = 5,
-        Verifications = 10,
     }
 }
