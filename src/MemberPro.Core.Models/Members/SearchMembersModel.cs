@@ -14,9 +14,7 @@ namespace MemberPro.Core.Models.Members
 
         public bool? ShowInDirectory { get; set; }
 
-        public int? RegionId { get; set; }
-
-        public int? DivisionId { get; set; }
+        public int? OrganizationId { get; set; }
 
         public int? PlanId { get; set; }
 
