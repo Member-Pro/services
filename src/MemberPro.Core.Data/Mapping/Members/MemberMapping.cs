@@ -26,8 +26,7 @@ namespace MemberPro.Core.Data.Mapping.Members
             builder.Property(x => x.PostalCode).HasMaxLength(20);
             builder.Property(x => x.PhoneNumber).HasMaxLength(20);
             builder.Property(x => x.ShowInDirectory);
-            builder.Property(x => x.RegionId);
-            builder.Property(x => x.DivisionId);
+            builder.Property(x => x.OrganizationId);
             builder.Property(x => x.Biography).HasMaxLength(2000);
             builder.Property(x => x.Interests).HasMaxLength(1000);
 
@@ -39,13 +38,9 @@ namespace MemberPro.Core.Data.Mapping.Members
                 .WithMany()
                 .HasForeignKey(x => x.StateProvinceId);
 
-            builder.HasOne(x => x.Region)
+            builder.HasOne(x => x.Organization)
                 .WithMany()
-                .HasForeignKey(x => x.RegionId);
-
-            builder.HasOne(x => x.Division)
-                .WithMany()
-                .HasForeignKey(x => x.DivisionId);
+                .HasForeignKey(x => x.OrganizationId);
 
             builder.HasMany(x => x.FieldValues)
                 .WithOne(x => x.Member)

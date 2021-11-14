@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemberPro.Core.Entities.Geography;
+using MemberPro.Core.Entities.Organizations;
 using MemberPro.Core.Entities.Plans;
 
 namespace MemberPro.Core.Entities.Members
@@ -33,11 +34,8 @@ namespace MemberPro.Core.Entities.Members
 
         public bool ShowInDirectory { get; set; }
 
-        public int? RegionId { get; set; }
-        public virtual Region Region { get; set; }
-
-        public int? DivisionId { get; set; }
-        public virtual Division Division { get; set; }
+        public int? OrganizationId { get; set; }
+        public virtual Organization Organization { get; set; }
 
         public string Biography { get; set; }
         public string Interests { get; set; }

@@ -3,11 +3,13 @@ using MemberPro.Core.Entities.Achievements;
 using MemberPro.Core.Entities.Geography;
 using MemberPro.Core.Entities.Media;
 using MemberPro.Core.Entities.Members;
+using MemberPro.Core.Entities.Organizations;
 using MemberPro.Core.Entities.Plans;
 using MemberPro.Core.Models.Achievements;
 using MemberPro.Core.Models.Geography;
 using MemberPro.Core.Models.Media;
 using MemberPro.Core.Models.Members;
+using MemberPro.Core.Models.Organizations;
 using MemberPro.Core.Models.Plans;
 
 namespace MemberPro.Core.Models
@@ -26,8 +28,7 @@ namespace MemberPro.Core.Models
             CreateMap<Attachment, AttachmentModel>();
 
             CreateMap<Country, CountryModel>();
-            CreateMap<Division, DivisionModel>();
-            CreateMap<Region, RegionModel>();
+            CreateMap<Organization, OrganizationModel>();
             CreateMap<StateProvince, StateProvinceModel>();
 
             CreateMap<CustomField, CustomFieldModel>();

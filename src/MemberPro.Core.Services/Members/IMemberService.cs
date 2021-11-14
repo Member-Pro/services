@@ -60,8 +60,7 @@ namespace MemberPro.Core.Services.Members
             var member = await _memberRepository.TableNoTracking
                 .Include(x => x.StateProvince)
                 .Include(x => x.Country)
-                .Include(x => x.Division)
-                .Include(x => x.Region)
+                .Include(x => x.Organization)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (member == null)
@@ -98,16 +97,14 @@ namespace MemberPro.Core.Services.Members
             var members = await _memberRepository.TableNoTracking
                 .Include(x => x.Country)
                 .Include(x => x.StateProvince)
-                .Include(x => x.Region)
-                .Include(x => x.Division)
+                .Include(x => x.Organization)
                 .WhereIf(!string.IsNullOrEmpty(searchModel.FirstName), x => x.FirstName.ToLower().Contains(searchModel.FirstName.ToLower()))
                 .WhereIf(!string.IsNullOrEmpty(searchModel.LastName), x => x.LastName.ToLower().Contains(searchModel.LastName.ToLower()))
                 .WhereIf(!string.IsNullOrEmpty(searchModel.EmailAddress), x => x.EmailAddress.ToLower().Contains(searchModel.EmailAddress.ToLower()))
                 .WhereIf(searchModel.CountryId.HasValue, x => x.CountryId == searchModel.CountryId.Value)
                 .WhereIf(searchModel.StateProvinceId.HasValue, x => x.StateProvinceId == searchModel.StateProvinceId.Value)
                 .WhereIf(searchModel.ShowInDirectory.HasValue, x => x.ShowInDirectory == searchModel.ShowInDirectory.Value)
-                .WhereIf(searchModel.RegionId.HasValue, x => x.RegionId == searchModel.RegionId.Value)
-                .WhereIf(searchModel.DivisionId.HasValue, x => x.DivisionId == searchModel.DivisionId.Value)
+                .WhereIf(searchModel.OrganizationId.HasValue, x => x.OrganizationId == searchModel.OrganizationId.Value)
                 .WhereIf(searchModel.PlanId.HasValue, x => x.CurrentPlanId == searchModel.PlanId.Value)
                 .WhereIf(searchModel.JoinedOnFrom.HasValue, x => x.JoinedOn.Date >= searchModel.JoinedOnFrom.Value.Date)
                 .WhereIf(searchModel.JoinedOnTo.HasValue, x => x.JoinedOn.Date <= searchModel.JoinedOnTo.Value.Date)
@@ -212,8 +209,7 @@ namespace MemberPro.Core.Services.Members
                 member.City = model.City;
                 member.PostalCode = model.PostalCode;
                 member.PhoneNumber = model.PhoneNumber;
-                member.RegionId = model.RegionId;
-                member.DivisionId = model.DivisionId;
+                member.Organization = model.Organization;
                 member.ShowInDirectory = model.ShowInDirectory;
                 member.Biography = model.Biography;
                 member.Interests = model.Interests;
