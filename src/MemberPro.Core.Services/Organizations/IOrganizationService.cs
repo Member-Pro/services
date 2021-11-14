@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using MemberPro.Core.Data;
 using MemberPro.Core.Entities.Organizations;
 using MemberPro.Core.Models.Organizations;
+using MemberPro.Core.Services.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -19,19 +20,22 @@ namespace MemberPro.Core.Services.Organizations
         Task<IEnumerable<OrganizationModel>> GetAll();
         Task<IEnumerable<OrganizationModel>> GetByParentId(int parentId);
 
-        // Task<OrganizationModel> Create(CreateOrganizationModel model);
+        Task<OrganizationModel> Create(CreateOrganizationModel model);
     }
 
     public class OrganizationService : IOrganizationService
     {
+        private readonly IDateTimeService _dateTimeService;
         private readonly IRepository<Organization> _organizationRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<OrganizationService> _logger;
 
-        public OrganizationService(IRepository<Organization> organizationRepository,
+        public OrganizationService(IDateTimeService dateTimeService,
+            IRepository<Organization> organizationRepository,
             IMapper mapper,
             ILogger<OrganizationService> logger)
         {
+            _dateTimeService = dateTimeService;
             _organizationRepository = organizationRepository;
             _mapper = mapper;
             _logger = logger;
@@ -73,26 +77,29 @@ namespace MemberPro.Core.Services.Organizations
             return organizations;
         }
 
-        // public async Task<OrganizationModel> Create(CreateOrganizationModel model)
-        // {
-        //     try
-        //     {
-        //         var Organization = new Organization
-        //         {
-        //             RegionId = model.RegionId, // TODO: Validate me
-        //             Name = model.Name,
-        //             Abbreviation = model.Abbreviation,
-        //         };
+        public async Task<OrganizationModel> Create(CreateOrganizationModel model)
+        {
+            try
+            {
+                var Organization = new Organization
+                {
+                    ParentId = model.ParentId, // TODO: Validate me
+                    Name = model.Name,
+                    Abbreviation = model.Abbreviation,
+                    Description = model.Description,
+                    CreatedOn = _dateTimeService.NowUtc,
+                    UpdatedOn = _dateTimeService.NowUtc,
+                };
 
-        //         await _organizationRepository.CreateAsync(Organization);
+                await _organizationRepository.CreateAsync(Organization);
 
-        //         return await FindById(Organization.Id);
-        //     }
-        //     catch(Exception ex)
-        //     {
-        //         _logger.LogError(ex, "Error creating Organization.");
-        //         throw;
-        //     }
-        // }
+                return await FindById(Organization.Id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error creating organization.");
+                throw;
+            }
+        }
     }
 }

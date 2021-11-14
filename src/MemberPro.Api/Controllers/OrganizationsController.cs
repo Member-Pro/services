@@ -42,20 +42,20 @@ namespace MemberPro.Api.Controllers
             return Ok(organizations);
         }
 
-        // [HttpPost("")]
-        // [Authorize(Policy = Policies.Admin)]
-        // public async Task<ActionResult<OrganizationModel>> Create(CreateRegionModel model)
-        // {
-        //     try
-        //     {
-        //         var result = await _organizationService.Create(model);
+        [HttpPost("")]
+        [Authorize(Policy = Policies.Admin)]
+        public async Task<ActionResult<OrganizationModel>> Create(CreateOrganizationModel model)
+        {
+            try
+            {
+                var result = await _organizationService.Create(model);
 
-        //         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
-        //     }
-        //     catch(Exception)
-        //     {
-        //         return StatusCode(500, "Error creating region");
-        //     }
-        // }
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            }
+            catch(Exception)
+            {
+                return StatusCode(500, "Error creating region");
+            }
+        }
     }
 }
