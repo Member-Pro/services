@@ -32,6 +32,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMemberAchievementService, MemberAchievementService>();
             services.AddTransient<IMemberRoleService, MemberRoleService>();
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
+            services.AddTransient<IOfficerService, OfficerService>();
             services.AddTransient<IOrganizationService, OrganizationService>();
             services.AddTransient<IRequirementService, RequirementService>();
             services.AddTransient<IRoleService, RoleService>();

@@ -30,6 +30,8 @@ namespace MemberPro.Core.Models
             CreateMap<Country, CountryModel>();
             CreateMap<Organization, OrganizationModel>();
             CreateMap<StateProvince, StateProvinceModel>();
+            CreateMap<OfficerPosition, OfficerPositionModel>();
+            CreateMap<Officer, OfficerModel>();
 
             CreateMap<CustomField, CustomFieldModel>();
             CreateMap<MemberAchievement, MemberAchievementModel>();
