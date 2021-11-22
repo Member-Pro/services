@@ -20,6 +20,8 @@ namespace MemberPro.Core.Services.Organizations
         Task<IEnumerable<OrganizationModel>> GetAll();
         Task<IEnumerable<OrganizationModel>> GetByParentId(int parentId);
 
+        Task<IEnumerable<OrganizationModel>> GetOrganizationWithParents(int id);
+
         Task<OrganizationModel> Create(CreateOrganizationModel model);
     }
 
@@ -54,13 +56,15 @@ namespace MemberPro.Core.Services.Organizations
 
         public async Task<IEnumerable<OrganizationModel>> GetAll()
         {
-            var organizations = await _organizationRepository.TableNoTracking
+            var orgs = await _organizationRepository.TableNoTracking
                 .Include(x => x.Parent)
                 .OrderBy(x => x.ParentId != null)
                 .ThenBy(x => x.ParentId)
                 .ThenBy(x => x.Name)
-                .ProjectTo<OrganizationModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
+
+            // Have to map this way to get the parent orgs to work
+            var organizations = _mapper.Map<List<OrganizationModel>>(orgs);
 
             return organizations;
         }
@@ -75,6 +79,35 @@ namespace MemberPro.Core.Services.Organizations
                 .ToListAsync();
 
             return organizations;
+        }
+
+        public async Task<IEnumerable<OrganizationModel>> GetOrganizationWithParents(int id)
+        {
+            var allOrgs = await GetAll(); // TODO: cache?
+
+            var result = new List<OrganizationModel>();
+
+            // Get the requested org and add it to the list first
+            // If its not found, return an empty list instead of continuing
+            var org = allOrgs.SingleOrDefault(x => x.Id == id);
+            if (org is null)
+            {
+                return result;
+            }
+
+            result.Add(org);
+
+            // Then loop through the parent orgs and add to the list
+            while(org.ParentId.HasValue)
+            {
+                org = allOrgs.SingleOrDefault(x => x.Id == org.ParentId.Value);
+                if (org is not null)
+                {
+                    result.Add(org);
+                }
+            }
+
+            return result;
         }
 
         public async Task<OrganizationModel> Create(CreateOrganizationModel model)
