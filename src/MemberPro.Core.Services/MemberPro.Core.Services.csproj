@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.2.20" />
@@ -22,6 +26,7 @@
     <ProjectReference Include="..\MemberPro.Core.Entities\MemberPro.Core.Entities.csproj" />
     <ProjectReference Include="..\MemberPro.Core.Models\MemberPro.Core.Models.csproj" />
     <ProjectReference Include="..\MemberPro.Core\MemberPro.Core.csproj" />
+    <ProjectReference Include="..\MemberPro.MessageTemplates\MemberPro.MessageTemplates.csproj" />
   </ItemGroup>
 
 </Project>

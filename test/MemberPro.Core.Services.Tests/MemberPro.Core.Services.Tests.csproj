@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0" />
     <PackageReference Include="moq" Version="4.16.1" />
@@ -27,6 +31,7 @@
     <ProjectReference Include="..\..\src\MemberPro.Core.Models\MemberPro.Core.Models.csproj" />
     <ProjectReference Include="..\..\src\MemberPro.Core.Services\MemberPro.Core.Services.csproj" />
     <ProjectReference Include="..\..\src\MemberPro.Core\MemberPro.Core.csproj" />
+    <ProjectReference Include="..\..\src\MemberPro.MessageTemplates\MemberPro.MessageTemplates.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,49 +1,28 @@
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using MemberPro.Core.Data;
 using MemberPro.Core.Data.Implementations;
 using MemberPro.Core.Entities.Geography;
 using MemberPro.Core.Entities.Members;
 using MemberPro.Core.Entities.Plans;
-using MemberPro.Core.Models;
 using MemberPro.Core.Models.Members;
 using MemberPro.Core.Models.Plans;
 using MemberPro.Core.Services.Members;
 using MemberPro.Core.Services.Plans;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
 namespace MemberPro.Core.Services.Tests.Members
 {
-    public class MemberRenewalServiceTests
+    public class MemberRenewalServiceTests : ServiceTestBase
     {
-        private readonly IDbContext _dbContext;
-        private readonly IMapper _mapper;
-
-        public MemberRenewalServiceTests()
+        public MemberRenewalServiceTests() : base()
         {
-            // var dbContextOptions = new DbContextOptionsBuilder<MemberProDbContext>()
-            //     .UseSqlite("Filename=test.db")
-            //     .Options;
-
-            // _dbContext = new MemberProDbContext(dbContextOptions);
-
-            var autoMapperConfig = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new ModelMapper());
-            });
-            _mapper = autoMapperConfig.CreateMapper();
-
-            // Seed();
         }
 
-        private void Seed()
+        protected override void InitDatabase()
         {
-            _dbContext.Database.EnsureDeleted();
-            _dbContext.Database.EnsureCreated();
+            base.InitDatabase();
 
             var country = new Country
             {
@@ -51,7 +30,7 @@ namespace MemberPro.Core.Services.Tests.Members
                 Abbreviation = "US",
             };
 
-            _dbContext.Set<Country>().Add(country);
+            DbContext.Set<Country>().Add(country);
 
             var state = new StateProvince
             {
@@ -60,7 +39,7 @@ namespace MemberPro.Core.Services.Tests.Members
                 Abbreviation = "WI",
             };
 
-            _dbContext.Set<StateProvince>().Add(state);
+            DbContext.Set<StateProvince>().Add(state);
 
             var plan = new MembershipPlan
             {
@@ -75,7 +54,7 @@ namespace MemberPro.Core.Services.Tests.Members
                 UpdatedOn = new DateTime(2021, 1, 1),
             };
 
-            _dbContext.Set<MembershipPlan>().Add(plan);
+            DbContext.Set<MembershipPlan>().Add(plan);
 
             var member = new Member
             {
@@ -87,7 +66,7 @@ namespace MemberPro.Core.Services.Tests.Members
                 StateProvince = state,
             };
 
-            _dbContext.Set<Member>().Add(member);
+            DbContext.Set<Member>().Add(member);
 
             var renewal = new MemberRenewal
             {
@@ -101,9 +80,9 @@ namespace MemberPro.Core.Services.Tests.Members
                 Comments = "Test",
             };
 
-            _dbContext.Set<MemberRenewal>().Add(renewal);
+            DbContext.Set<MemberRenewal>().Add(renewal);
 
-            _dbContext.SaveChanges();
+            DbContext.SaveChanges();
         }
 
         [Fact]
@@ -157,9 +136,9 @@ namespace MemberPro.Core.Services.Tests.Members
 
             var memberRenewalService = new MemberRenewalService(memberServiceMock.Object,
                 planServiceMock.Object,
-                new EfRepository<MemberRenewal>(_dbContext),
+                new EfRepository<MemberRenewal>(DbContext),
                 loggerMock.Object,
-                _mapper);
+                Mapper);
 
             var result = await memberRenewalService.CreateRenewalAsync(new CreateRenewalModel
             {
