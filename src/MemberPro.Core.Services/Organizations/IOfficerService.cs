@@ -27,7 +27,7 @@ namespace MemberPro.Core.Services.Organizations
         Task<OfficerModel> FindOfficerByIdAsync(int id);
 
         Task<IEnumerable<OfficerModel>> GetCurrentOfficersForOrganizationAsync(int orgId, DateOnly asOf,
-            OfficerPositionType? positionType = null);
+            OfficerPositionType? positionType = null, bool includeParentOrgs = false);
 
         Task<OfficerModel> CreateOfficerAsync(CreateOfficerModel model);
         Task UpdateOfficerAsync(UpdateOfficerModel model);
@@ -149,15 +149,22 @@ namespace MemberPro.Core.Services.Organizations
         }
 
         public async Task<IEnumerable<OfficerModel>> GetCurrentOfficersForOrganizationAsync(int orgId, DateOnly asOf,
-            OfficerPositionType? positionType = null)
+            OfficerPositionType? positionType = null, bool includeParentOrgs = false)
         {
+            List<int> orgIds = new();
+            if (includeParentOrgs)
+            {
+                var organizations = await _organizationService.GetOrganizationWithParents(orgId);
+                orgIds = organizations.Select(x => x.Id).ToList();
+            }
+
             var officers = await _officerRepository.TableNoTracking
                 .Include(x => x.Position)
                 .Include(x => x.Member)
-                .Where(x => x.Position.OrganizationId == orgId
-                    && x.TermStart >= asOf
-                    && x.TermEnd <= asOf)
+                .Where(x => x.TermStart >= asOf && x.TermEnd <= asOf)
                 .WhereIf(positionType.HasValue, x => x.Position.PositionType == positionType.Value)
+                .WhereIf(includeParentOrgs && orgIds.Any(), x => orgIds.Contains(x.Position.OrganizationId))
+                .WhereIf(!includeParentOrgs, x => x.Position.OrganizationId == orgId)
                 .OrderBy(x => x.Position.PositionType)
                 .ThenBy(x => x.Member.LastName)
                 .ThenBy(x => x.Member.FirstName)

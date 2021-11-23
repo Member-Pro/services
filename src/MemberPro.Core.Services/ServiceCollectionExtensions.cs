@@ -10,6 +10,7 @@ using MemberPro.Core.Services.Media;
 using MemberPro.Core.Services.Members;
 using MemberPro.Core.Services.Organizations;
 using MemberPro.Core.Services.Plans;
+using MemberPro.Core.Services.UI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 namespace MemberPro.Core.Services
@@ -19,6 +20,8 @@ namespace MemberPro.Core.Services
         public static void AddAppServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHttpContextAccessor();
+            services.AddMvc();
+
             services.AddAutoMapper(typeof(ModelMapper));
 
             services.AddTransient<IAchievementService, AchievementService>();
@@ -34,6 +37,7 @@ namespace MemberPro.Core.Services
             services.AddTransient<IMembershipPlanService, MembershipPlanService>();
             services.AddTransient<IOfficerService, OfficerService>();
             services.AddTransient<IOrganizationService, OrganizationService>();
+            services.AddTransient<IRazorViewRenderer, RazorViewRenderer>();
             services.AddTransient<IRequirementService, RequirementService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IStateProvinceService, StateProvinceService>();

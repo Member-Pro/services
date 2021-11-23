@@ -36,14 +36,15 @@ namespace MemberPro.Api.Controllers
 
         [HttpGet("/organizations/{orgId}/officers")]
         public async Task<ActionResult<IEnumerable<OfficerModel>>> GetOfficersForOrg(int orgId,
-            DateOnly? asOf = null, OfficerPositionType? positionType = null)
+            [FromQuery] DateTime? asOf = null, [FromQuery] OfficerPositionType? positionType = null, [FromQuery] bool includeParentOrgs = false)
         {
             if (!asOf.HasValue)
             {
-                asOf = _dateTimeService.Today;
+                asOf = _dateTimeService.NowUtc.Date;
             }
 
-            var officers = await _officerService.GetCurrentOfficersForOrganizationAsync(orgId, asOf.Value, positionType);
+            var officers = await _officerService.GetCurrentOfficersForOrganizationAsync(orgId, DateOnly.FromDateTime(asOf.Value),
+                positionType, includeParentOrgs);
 
             return Ok(officers);
         }
