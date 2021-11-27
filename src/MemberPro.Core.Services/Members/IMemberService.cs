@@ -27,7 +27,8 @@ namespace MemberPro.Core.Services.Members
         Task<MemberModel> FindByEmailAsync(string email);
         Task<MemberModel> FindBySubjectIdAsync(string subjectId);
 
-        Task<IEnumerable<MemberModel>> SearchAsync(SearchMembersModel search = null);
+        Task<IEnumerable<MemberModel>> SearchAsync(SearchMembersModel search = null,
+            int skip = 0, int take = 50);
         Task<MemberModel> RegisterAsync(RegisterUserModel model);
         Task<MemberModel> UpdateAsync(MemberModel model);
     }
@@ -88,7 +89,8 @@ namespace MemberPro.Core.Services.Members
             return _mapper.Map<MemberModel>(member);
         }
 
-        public async Task<IEnumerable<MemberModel>> SearchAsync(SearchMembersModel searchModel = null)
+        public async Task<IEnumerable<MemberModel>> SearchAsync(SearchMembersModel searchModel = null,
+            int skip = 0, int take = 50)
         {
             if (searchModel is null)
             {
@@ -113,6 +115,8 @@ namespace MemberPro.Core.Services.Members
                 .WhereIf(searchModel.DateOfBirthTo.HasValue, x => x.DateOfBirth.Date <= searchModel.DateOfBirthTo.Value.Date)
                 .OrderBy(x => x.LastName)
                 .ThenBy(x => x.FirstName)
+                .Skip(skip)
+                .Take(take)
                 .ProjectTo<MemberModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 

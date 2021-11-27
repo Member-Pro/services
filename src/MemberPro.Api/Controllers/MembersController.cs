@@ -20,9 +20,10 @@ namespace MemberPro.Api.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<SimpleMemberModel>>> Get([FromQuery] SearchMembersModel model)
+        public async Task<ActionResult<IEnumerable<SimpleMemberModel>>> Get([FromQuery] SearchMembersModel model,
+            int skip = 0, int take = 50)
         {
-            var members = await _memberService.SearchAsync(model);
+            var members = await _memberService.SearchAsync(model, skip, take);
             return Ok(members);
         }
 
