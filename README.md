@@ -4,7 +4,7 @@ This repository contains the API services that power Member Pro. The API is buil
 
 ## Local Development
 
-To run Member Pro Services locally, you'll need the [.NET 5 SDK](https://dotnet.microsoft.com/download) and a Postgres
+To run Member Pro Services locally, you'll need the [.NET 6 SDK](https://dotnet.microsoft.com/download) and a Postgres
 server (I am running Postgres in a [Docker container](https://hub.docker.com/_/postgres/) locally.)
 
 _TODO: Document configuration... there's a lot..._
